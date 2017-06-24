@@ -7,12 +7,13 @@
     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.8.4/dist/aframe-extras.min.js"></script>
     <script src="https://cdn.rawgit.com/ngokevin/aframe-physics-components/master/dist/aframe-physics-components.min.js"></script>
     <script>
+      
       AFRAME.registerComponent("listener", {
 		    schema : 
         {
           forwardFactor : {
             type : "number",
-            default : 1
+            default : 2
           },
           target: {
             type: 'selector'
@@ -23,29 +24,42 @@
         },
         init: function() {
           var playerEl = document.querySelector('#character');
+          var that = this;
           
           playerEl.addEventListener('collide', function (e) {
-            console.log('collision, mothafucka')
-            e.detail.target.el;  // Original entity (playerEl).
-            e.detail.body.el;    // Other entity, which playerEl touched.
-            e.detail.contact;    // Stats about the collision (CANNON.ContactEquation).
-            e.detail.contact.ni; // Normal (direction) of the collision (CANNON.Vec3).
+            var collidedWithEl = e.detail.body.el;
+            console.log('collision');
+            
+            if(collidedWithEl.id == 'cylinder') {
+              var xPosition = e.detail.target.position.x;
+              var yPosition = e.detail.target.position.y;
+              
+              var xDirectionAdjustment = xPosition > 0 ? -1 : 1; 
+              var yDirectionAdjustment = yPosition > 0 ? -1 : 1;
+              
+              document.querySelector('#character').setAttribute('position', {
+                  x: xPosition + (5 * xDirectionAdjustment),
+                  y: yPosition + (5 * yDirectionAdjustment)
+                }
+                );
+            }
           });
         },
         tick : function()
         {	
-          const targetItem = this.data.target;
-          var distance = this.data.distance;
-          var targetPosition = targetItem.getAttribute('position');
-          
-          const direction = this.el.components.camera.camera.getWorldDirection();
-          
-          this.el.setAttribute('position',{
-            x: targetPosition.x + direction.x,
-            y: targetPosition.y + direction.y,
-            z: targetPosition.z + -this.data.forwardFactor
-          });
-          
+           const targetItem = this.data.target;
+            var distance = this.data.distance;
+            var targetPosition = targetItem.getAttribute('position');
+
+            const direction = this.el.components.camera.camera.getWorldDirection();
+
+            var currentPosition = {
+              x: targetPosition.x + direction.x,
+              y: targetPosition.y + direction.y,
+              z: targetPosition.z + -this.data.forwardFactor
+            };
+
+            this.el.setAttribute('position', currentPosition); 
         }
       });
       
@@ -53,32 +67,30 @@
    </script>
   </head>
   <body>
-    
-  <asset>
-    <a-mixin id="build" geometry="primitive: box" material="shader: standard; metalness: 0.6"></a-mixin>
-  </asset> 
  
  <!-- Fog for dimming objects in distance -->
- <a-scene physics="gravity: 0;" fog="type: linear; color: #40a4df; far: 2200; near: 0;">
+ <a-scene physics="gravity: 0;" canvas fog="type: linear; color: #40a4df; far: 2200; near: 0;">
+   
+   <asset>
+    <a-mixin id="build" material="src: url(https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272)" geometry="primitive: box"></a-mixin>
+  </asset> 
 
+<a-entity static-body id="cylinder" geometry="primitive: cylinder; height: 6000; radius: 100; open-ended: true" position="0 0 1000" rotation="-90 0 0" material="src: url(https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272); shader: flat; side: double; opacity: 0.8;"></a-entity>
 
-<!-- Digital Worlds -->
-<a-entity id="floor" static-body geometry="primitive: plane; height: 8000; width: 8000" position="0 -1 -5" rotation="-90 0 0" material="shader: flat; color: #40a4df; repeat: 80 80">
-   </a-entity>
 
 <!-- Buildings -->
-<a-entity id="1" static-body mixin="build" geometry="depth: 150; width: 150; height: 140;" position="110 69 1500" material="src: url(https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272)"></a-entity>
-<a-entity id="2" static-body mixin="build" geometry="depth: 150; width: 150; height: 140;" position="-60 69 1500" material="src: url(https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272)"></a-entity>
-<a-entity id="3" static-body mixin="build" geometry="depth: 150; width: 150; height: 140;" position="0 69 700" material="src: url(https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272)"></a-entity>
-<a-entity id="4" static-body mixin="build" geometry="depth: 75; width: 75; height: 300;" position="85 145 800" material="src: url(https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272)"></a-entity>
-<a-entity id="5" static-body mixin="build" geometry="depth: 150; width: 150; height: 140;" position="135 69 500" material="src: url(https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272)"></a-entity>
-<a-entity id="6" static-body mixin="build" geometry="depth: 75; width: 75; height: 300;" position="-90 145 460" material="src: url(https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272)"></a-entity>
-<a-entity id="7" static-body mixin="build" geometry="depth: 150; width: 150; height: 140;" position="-150 69 200" material="src: url(https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272)"></a-entity>
-<a-entity id="8" static-body mixin="build" geometry="depth: 75; width: 75; height: 300;" position="100 145 260" material="src: url(https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272)"></a-entity>
+<a-entity id="1" static-body mixin="build" geometry="depth: 40; width: 40; height: 40;" position="30 20 1000"></a-entity>
+<a-entity id="2" static-body mixin="build" geometry="depth: 40; width: 40; height: 40;" position="-20 40 1200"></a-entity>
+<a-entity id="3" static-body mixin="build" geometry="depth: 40; width: 40; height: 40;" position="0 69 400"></a-entity>
+<a-entity id="4" static-body mixin="build" geometry="depth: 40; width: 40; height: 40;" position="-10 5 30"></a-entity>
+<a-entity id="5" static-body mixin="build" geometry="depth: 40; width: 40; height: 40;" position="25 -40 500"></a-entity>
+<a-entity id="6" static-body mixin="build" geometry="depth: 40; width: 40; height: 40;" position="-7 -45 800"></a-entity>
+<a-entity id="7" static-body mixin="build" geometry="depth: 40; width: 40; height: 40;" position="-14 36 250"></a-entity>
+<a-entity id="8" static-body mixin="build" geometry="depth: 40; width: 45; height: 40;" position="43 -30 100"></a-entity>
 
 
 <!-- Camera -->
-<a-entity id="character" position="0 10 1000" kinematic-body listener="target: #character" camera universal-controls>
+<a-entity id="character" position="0 10 2000" kinematic-body listener="target: #character" camera universal-controls>
 </a-entity>
 
       <!-- Lighting and background -->
