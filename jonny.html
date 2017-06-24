@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  
+  
+  <head>
+    <title>SharkVR</title>
+    <meta name="description" content="SharkVR Game">
+    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.8.4/dist/aframe-extras.min.js"></script>
+  </head>
+  <body>
+      <!-- Script for Timer -->
+  <p id="timer"></p>
+
+	<script>
+	//Using the date/time is the only thing I could think to use as a timer
+	// Gets the initial time
+	var initialTime = new Date().getTime();
+
+	// Update the count down every 1 second
+	var x = setInterval(function() {
+
+		// Get todays date and time
+		var now = new Date().getTime();
+
+		// Find the distance between now and the initial time
+		var distance = now - initialTime;
+
+		// Time calculations for days, hours, minutes and seconds, might not use days
+		//var days = Math.floor(distance / (1000 * 60 * 60 * 24)); //Saved this code just in case
+		//var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+		// Display the result in the element with id="demo"
+		document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+		// When the player dies or reaches x amount of points 
+		if (distance > 3000) {
+			document.writeln(playerPoints);
+		}
+	}, 1000);
+		
+	//End of Timer Script
+	//Point System
+	var playerPoints = 0;
+	var multiplier = 1;
+	playerPoints = seconds*multplier;
+	if (seconds%10 == 0){
+		multiplier++;
+	}
+  
+  </script>
+    
+    <a-scene>
+    
+      
+      <a-entity id="map" rotation="0 90 0" position="0 -1.3 -2">
+        
+        <a-torus src="https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272" scale="4 4 4" material="side: back;" ></a-torus>
+        <a-animation
+          attribute="rotation"
+               easing="linear"
+               dur="10000"
+               fill="forwards"
+               to="0 90 360"
+               repeat="indefinite">
+        </a-animation>
+        
+      </a-entity>
+      <a-text value="SharkVR Game" position="0 3 -5" align="center" color="#333333"></a-text>
+      <a-circle position="0 0 0" rotation="-90 0 0" radius="6" color="#48BD94"></a-circle>
+      <a-sky color="#ECECEC"></a-sky>
+    </a-scene>
+    
+  </body>
+</html>
