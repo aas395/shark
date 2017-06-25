@@ -4,51 +4,59 @@ AFRAME.registerComponent('level', {
 	      type : "number",
 	      default : 0
 	    },
+	    levelLength: {
+	      type : "number",
+	      default : 1500
+	    },
 	    levelEnd: {
 	      type : "number",
 	      default : 0
+	    },
+	    distance: {
+	      type : "number",
+	      default : 0
+	    },
+	    numObstacles: {
+	      type : "number",
+	      default : 10
 	    }
 	},
 	multiple: true,
 	init: function () {
+		this.data.levelLength = this.data.levelLength;
+		this.data.levelEnd = this.data.levelStart + this.data.levelLength;
+
 		this.addTunnel();
 		this.addObstacles();
 	},
-	tick: function() {
-		// this.data.score++;
-	},
 	addTunnel: function() {
+		var levelLength = this.data.levelLength;
 		var tunnel = document.createElement('a-entity');
+
 		tunnel.setAttribute('mixin', 'tunnel');
-		this.el.appendChild(tunnel)
+		tunnel.setAttribute('geometry', {
+			primitive: 'cylinder',
+			height: levelLength,
+			radius: 100,
+			"open-ended": true
+		});
+
+		tunnel.setAttribute('position', {
+			x: 0,
+			y: 0,
+			z: -(levelLength / 2)
+		});
+
+		this.el.appendChild(tunnel);
 	},
 	addObstacles: function() {
 		var obstaclesContainer = document.createElement('a-entity');
 
-		var obstacles = [
-		{
-			"mixin": "obstacle",
-		},
-		{
-			"mixin": "obstacle"
-		},
-		{
-			"mixin": "obstacle"
-		},
-		{
-			"mixin": "obstacle"
-		},
-		{
-			"mixin": "obstacle"
-		},
-		{
-			"mixin": "obstacle"
-		}
-		];
+		for(var i = 0; i < this.data.numObstacles; i++) {
+			var currentObstacle = {};
 
-		for(var i = 0; i < obstacles.length; i++) {
-			var currentObstacle = obstacles[i];
 			var building = document.createElement('a-entity');
+			building.setAttribute('mixin', 'obstacle');
 
 			var depth = 40;
 			var width = 40;
@@ -62,7 +70,7 @@ AFRAME.registerComponent('level', {
 			var signOfY = Math.random() >= 0.5 ? -1 : 1;
 			var positionY = Math.floor(Math.random() * 50) * signOfY;
 
-			var positionZ = -Math.floor(Math.random() * 1000) - 500;
+			var positionZ = -Math.floor(Math.random() * this.data.levelEnd) - 500;
 
 			currentObstacle.position = positionX + " " + positionY + " " + positionZ;
 
@@ -74,6 +82,7 @@ AFRAME.registerComponent('level', {
 
 			obstaclesContainer.appendChild(building);
 		}
+
 		this.el.appendChild(obstaclesContainer);
 	},
 	setLevelStart: function(start) {
@@ -81,6 +90,5 @@ AFRAME.registerComponent('level', {
 	},
 	setLevelEnd: function(end) {
 		this.data.levelEnd = end;
-		// console.log(this.data.levelEnd)
 	}
 });
