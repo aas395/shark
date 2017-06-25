@@ -22,10 +22,13 @@ AFRAME.registerComponent("listener", {
         var xDirectionAdjustment = xPosition > 0 ? -1 : 1;
         var yDirectionAdjustment = yPosition > 0 ? -1 : 1;
 
-        document.querySelector('#character').setAttribute('position', {
+        if(Game.data.distance > 0) {
+          document.querySelector('#character').setAttribute('position', {
             x: xPosition + (5 * xDirectionAdjustment),
             y: yPosition + (5 * yDirectionAdjustment)
-        });
+          });  
+        }
+        
       }
 
       if (collidedWithEl.hasAttribute('obstacle')) {

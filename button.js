@@ -14,9 +14,9 @@ AFRAME.registerComponent('cursor-listener', {
 			animation.setAttribute("easing", "ease-in");
 			animation.setAttribute("attribute", "scale");
 			animation.setAttribute("fill", "forwards");
-			animation.setAttribute("from", "1 1 1");
-			animation.setAttribute("to", "0.1 0.1 0.1");
-			animation.setAttribute("dur", 1500);
+			animation.setAttribute("from", "0.1 0.1 0.1");
+			animation.setAttribute("to", "0.05 0.05 0.05");
+			animation.setAttribute("dur", 1200);
 			animation.setAttribute("id", "cursor-animation");
 			that.data.target.appendChild(animation);
 		});
@@ -27,6 +27,7 @@ AFRAME.registerComponent('cursor-listener', {
 		});
 
 		this.el.addEventListener('click', function (evt) {
+			console.log('click');
 			Game.startGame();
 		});
 	}
