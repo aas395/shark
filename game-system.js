@@ -56,6 +56,7 @@ AFRAME.registerSystem('game', {
 
     document.querySelector("#intro-modal").setAttribute('visible', false);
     document.querySelector("#cursor").setAttribute('visible', false);
+
   },
   endGame: function() {
     var that = this;
@@ -66,10 +67,20 @@ AFRAME.registerSystem('game', {
     var endModal = document.querySelector("#end-modal");
     var endDistance = this.data.distance;
 
-    endModal.setAttribute('position', {x:0,  y:0, z: -endDistance - 50 });
     endModal.setAttribute('visible', true);
 
     clearInterval(this.data.timerIntervalId);
+
+    var timeRemaining = 5;
+
+    var intervalId = setInterval(function(){
+      if(timeRemaining == 0) {
+        clearInterval(intervalId);
+        document.querySelector('#countdown').setAttribute('text', "value: 5;");
+      }
+      timeRemaining--;
+      document.querySelector('#countdown').setAttribute('text', "value: " + timeRemaining + ";");
+    },1000);
 
     setTimeout(function() {
       that.resetGame();
@@ -89,7 +100,7 @@ AFRAME.registerSystem('game', {
     endModal.setAttribute('visible', false);
   },
   updateTimer: function(minutes, seconds) {
-    document.getElementById("time").setAttribute('text', 'value: ' + minutes + "m " + seconds + "s ;");
+    // document.getElementById("time").setAttribute('text', 'value: ' + minutes + "m " + seconds + "s ;");
   },
   startTimer: function() {
     var that = this;

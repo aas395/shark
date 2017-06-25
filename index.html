@@ -44,10 +44,20 @@
                 cursor="fuse: true">
              <a-animation begin="cursor-fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
           </a-entity>
+          
+          <!-- End Modal  -->
+          <a-entity id="end-modal" ui-modal visible="false">
+            <a-entity text="value: GAME OVER;" position="22 2 -10" width="100" height="100" scale="60 60 60"></a-entity>
+            <a-entity text="value: Resetting;" position="12 -0.5 -10" width="100" height="100" scale="30 30 30"></a-entity>
+            <a-entity id="countdown" text="value: 5;" position="14.5 -2 -10" width="100" height="100" scale="30 30 30"></a-entity>
+            <a-plane width="100" height="100" scale="100 100 100" material="color: black; opacity: 0.7;" position="50 50 -12"></a-plane>
+
+          </a-entity>
 
           <audio id="river" src="https://cdn.glitch.com/f6776a32-7c26-4f5c-9cfd-dfedc35a5ea3%2Fshark-final.mp3?1498407744096" preload="auto" autoplay="true" loop="true"></audio>
 
         </a-entity>
+
 
         <!-- Intro Block -->
 
@@ -77,7 +87,6 @@
 
           <a-plane cursor-listener width="25" height="10" scale="1 1 1" material="color: black; opacity: 1" position="0 -10 -99">
           </a-plane>
-
         </a-entity>
 
         <!-- Lighting and background -->
