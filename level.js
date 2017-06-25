@@ -11,9 +11,6 @@ AFRAME.registerComponent('level', {
 	},
 	multiple: true,
 	init: function () {
-		// var Game = document.querySelector('a-scene').systems['game'];
-
-		// Game.setLevelEnd(Game.data.levelStart + this.el.getAttribute('geometry').height);
 		this.addTunnel();
 		this.addObstacles();
 	},
@@ -74,7 +71,7 @@ AFRAME.registerComponent('level', {
 				newAttribute.value = currentObstacle[key];
 				building.setAttributeNode(newAttribute);
 			}
-			// console.log(document.querySelector('[tunnel]'));
+
 			obstaclesContainer.appendChild(building);
 		}
 		this.el.appendChild(obstaclesContainer);
