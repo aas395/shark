@@ -57,10 +57,19 @@ AFRAME.registerComponent('level', {
 
 			var building = document.createElement('a-entity');
 			building.setAttribute('mixin', 'obstacle');
+			var shark = document.createElement('a-entity');
 
-			var depth = 40;
-			var width = 40;
-			var height = 40;
+			shark.setAttribute('class', 'shark');
+			shark.setAttribute('scale', '5 5 5');
+			shark.setAttribute('rotation', '0 0 0');
+			shark.setAttribute('animation-mixer', 'clip: swim;');
+			shark.setAttribute('json-model', {src: 'url(https://cdn.rawgit.com/brendanluu/brendanluu.github.io/407d10d6/assets/sharky.json)'});
+
+			building.appendChild(shark);
+
+			var depth = 51;
+			var width = 32;
+			var height = 18;
 
 			currentObstacle.geometry = "depth:" + depth + "; width:" + width + "; height: " + height + ";";
 

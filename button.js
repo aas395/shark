@@ -17,7 +17,13 @@ AFRAME.registerComponent('cursor-listener', {
 			animation.setAttribute("from", "1 1 1");
 			animation.setAttribute("to", "0.1 0.1 0.1");
 			animation.setAttribute("dur", 1500);
+			animation.setAttribute("id", "cursor-animation");
 			that.data.target.appendChild(animation);
+		});
+
+		this.el.addEventListener('mouseleave', function (evt) {
+			var cursorAnimation = document.querySelector('#cursor-animation');
+			document.querySelector('#cursor').removeChild(cursorAnimation);
 		});
 
 		this.el.addEventListener('click', function (evt) {
