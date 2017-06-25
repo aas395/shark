@@ -34,7 +34,6 @@ AFRAME.registerComponent("listener", {
       }
 
       if(collidedWithEl.hasAttribute('tunnel-checkpoint')) {
-        console.log(collidedWithEl.components);
         collidedWithEl.components['tunnel-checkpoint'].handleCollision();
       }
 

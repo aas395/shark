@@ -22,7 +22,7 @@ AFRAME.registerSystem('game', {
     },
     level: {
       type : "number",
-      default : 1
+      default : 0
     },
     timerIntervalId: {
       type: "number",
