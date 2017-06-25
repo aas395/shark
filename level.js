@@ -19,6 +19,10 @@ AFRAME.registerComponent('level', {
 	    numObstacles: {
 	      type : "number",
 	      default : 10
+	    },
+	    tunnelRadius: {
+	      type : "number",
+	      default : 100
 	    }
 	},
 	multiple: true,
@@ -27,7 +31,7 @@ AFRAME.registerComponent('level', {
 		this.data.levelEnd = this.data.levelStart + this.data.levelLength;
 
 		this.addTunnel();
-		this.addObstacles();
+		this.addObstacles({ bufferDistance: 250 });
 	},
 	addTunnel: function() {
 		var levelLength = this.data.levelLength;
@@ -37,7 +41,7 @@ AFRAME.registerComponent('level', {
 		tunnel.setAttribute('geometry', {
 			primitive: 'cylinder',
 			height: levelLength,
-			radius: 100,
+			radius: this.data.tunnelRadius,
 			openEnded: true
 		});
 
@@ -48,8 +52,41 @@ AFRAME.registerComponent('level', {
 		});
 
 		this.el.appendChild(tunnel);
+		this.addLevelCheckpoints();
 	},
-	addObstacles: function() {
+	addLevelCheckpoints: function() {
+		//level start
+		//increments level number and speed
+		var levelStartPlane = document.createElement('a-plane');
+		levelStartPlane.setAttribute('position', {
+			x: 0,
+			y: 0,
+			z: this.data.levelStart
+		});
+
+		levelStartPlane.setAttribute('height', this.data.tunnelRadius * 2);
+		levelStartPlane.setAttribute('width', this.data.tunnelRadius * 2);
+		levelStartPlane.setAttribute('material', {color: '#000', opacity: 1});
+		levelStartPlane.setAttribute('static-body', '');
+		levelStartPlane.setAttribute('tunnel-checkpoint', 'type: start');
+		
+		this.el.appendChild(levelStartPlane);
+
+		//level 1/4
+		//removes previous level and objects
+		
+		//level 3/4
+		//loads next level and objects
+
+	},
+	addObstacles: function(params) {
+
+		var bufferDistance = 0;
+
+		if(typeof params.bufferDistance != 'undefined') {
+			bufferDistance = params.bufferDistance;
+		}
+
 		var obstaclesContainer = document.createElement('a-entity');
 
 		for(var i = 0; i < this.data.numObstacles; i++) {
@@ -79,7 +116,7 @@ AFRAME.registerComponent('level', {
 			var signOfY = Math.random() >= 0.5 ? -1 : 1;
 			var positionY = Math.floor(Math.random() * 50) * signOfY;
 
-			var positionZ = -Math.floor(Math.random() * this.data.levelEnd) - 500;
+			var positionZ = -bufferDistance + -Math.floor(Math.random() * (this.data.levelEnd - bufferDistance));
 
 			currentObstacle.position = positionX + " " + positionY + " " + positionZ;
 

@@ -20,7 +20,7 @@ AFRAME.registerSystem('game', {
       type : "number",
       default : 0
     },
-    currentLevel: {
+    level: {
       type : "number",
       default : 1
     },

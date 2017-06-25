@@ -32,6 +32,12 @@ AFRAME.registerComponent("listener", {
         console.log('Eaten by Shark');
         Game.endGame();
       }
+
+      if(collidedWithEl.hasAttribute('tunnel-checkpoint')) {
+        console.log(collidedWithEl.components);
+        collidedWithEl.components['tunnel-checkpoint'].handleCollision();
+      }
+
     });
   },
   tick : function() {
