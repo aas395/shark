@@ -43,6 +43,7 @@ AFRAME.registerSystem('game', {
   },
   setDistance: function(distance) {
     this.data.distance = -distance;
+    // console.log(this.data.distance);
   },
   updateScore: function() {
     this.data.score = this.data.distance;
@@ -52,5 +53,6 @@ AFRAME.registerSystem('game', {
   },
   setLevelEnd: function(end) {
     this.data.levelEnd = end;
+    // console.log(this.data.levelEnd)
   }
 });    
