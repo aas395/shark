@@ -38,7 +38,7 @@ AFRAME.registerComponent('level', {
 			primitive: 'cylinder',
 			height: levelLength,
 			radius: 100,
-			"open-ended": true
+			openEnded: true
 		});
 
 		tunnel.setAttribute('position', {
