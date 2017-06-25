@@ -50,8 +50,7 @@ AFRAME.registerSystem('game', {
     this.data.hasStarted = true;
     this.data.currentLevel = 1;
 
-    // if(document.querySelector(modal)) {
-    //     //hide modal
-    // }
+    document.querySelector("#intro-modal").setAttribute('visible', false);
+    document.querySelector("#cursor").setAttribute('visible', false);
   }
 });

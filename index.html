@@ -34,7 +34,7 @@
         <a-entity id="character" position="0 0 0" kinematic-body listener="target: #character" camera universal-controls>
 
           <!--Cursor-->
-          <a-entity position="0 0 -3"
+          <a-entity id="cursor" visible="true"  position="0 0 -3"
                 geometry="primitive: ring; radiusOuter: 0.30;
                           radiusInner: 0.20;"
                 material="color: cyan; shader: flat"
@@ -49,7 +49,7 @@
 
         <!-- Intro Block -->
 
-        <a-entity ui-modal visible="true">
+        <a-entity id="intro-modal" ui-modal visible="true">
 
           <a-plane width="50" height="50" scale="1 1 1" material="src: url(https://media.giphy.com/media/JXHhI4o9NCf8k/giphy.gif)" position="0 0 -100">
           </a-plane>

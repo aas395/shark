@@ -31,19 +31,22 @@ AFRAME.registerComponent("listener", {
   },
   tick : function() {
       var Game = document.querySelector('a-scene').systems['game'];
-      const targetItem = this.data.target;
-      var targetPosition = targetItem.getAttribute('position');
-      const direction = this.el.components.camera.camera.getWorldDirection();
-      var forwardMotionCoefficient = Game.data.forwardMotionCoefficient;
 
-      Game.setDistance(targetPosition.z);
+      if(Game.data.hasStarted) {
+        const targetItem = this.data.target;
+        var targetPosition = targetItem.getAttribute('position');
+        const direction = this.el.components.camera.camera.getWorldDirection();
+        var forwardMotionCoefficient = Game.data.forwardMotionCoefficient;
 
-      var currentPosition = {
-        x: targetPosition.x + direction.x,
-        y: targetPosition.y + direction.y,
-        z: targetPosition.z + -forwardMotionCoefficient
-      };
+        Game.setDistance(targetPosition.z);
 
-      this.el.setAttribute('position', currentPosition);
+        var currentPosition = {
+          x: targetPosition.x + direction.x,
+          y: targetPosition.y + direction.y,
+          z: targetPosition.z + -forwardMotionCoefficient
+        };
+
+        this.el.setAttribute('position', currentPosition);
+      }
   }
 });
