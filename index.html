@@ -31,7 +31,7 @@
         </a-entity>
 
         <!-- Camera -->
-        <a-entity id="character" position="0 0 0" kinematic-body listener="target: #character" camera universal-controls>
+        <a-entity id="character" position="0 0 -50" kinematic-body listener="target: #character" camera universal-controls>
 
           <!--Cursor-->
           <a-entity id="cursor" visible="true"  position="0 0 -3"
@@ -41,23 +41,21 @@
                 cursor="fuse: true">
              <a-animation begin="cursor-fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
           </a-entity>
-
-          <a-entity class="timer" geometry="primitive: plane; width: 0.3; height: 0.1;" position="0 0.7 -0.9" rotation="40 0 0" material="shader: flat; opacity: 0; transparent: true;">
-            <a-entity id="time"></a-entity>
-          </a-entity>
         </a-entity>
 
         <!-- Intro Block -->
 
         <a-entity id="intro-modal" ui-modal visible="true">
 
-          <a-plane width="50" height="50" scale="1 1 1" material="src: url(https://media.giphy.com/media/JXHhI4o9NCf8k/giphy.gif)" position="0 0 -100">
+          <a-plane width="50" height="50" scale="3.5 3.5 .5" transparent="true" material="src: url(_assets/shark-teeth.png)" position="0 2 -100">
           </a-plane>
-          <a-asset-item id="BoldFont" src="https://rawgit.com/rollup/three-jsnext/master/examples/fonts/helvetiker_bold.typeface.json"></a-asset-item>
 
-          <a-entity id="title" text-geometry="value: Deep Sh*t; font: #BoldFont; size: 12; height: .3;" material="color: #D0F6FC;" position="0 -2 -98"></a-entity>
-          <a-entity id="subhead" text-geometry="value: Click anywhere to begin.; font: #BoldFont; size: 3; height: .3;" material="color: #D0F6FC;" position="0 -5 -98"></a-entity>
+          <a-entity text="value: DODGE SHARKS;" position="16.5 0 -80" scale="50 50 5">
+          </a-entity>
 
+          <a-entity text="value: Focus here to start;" position="8.8 -6.2 -80" scale="28 28 5">
+          </a-entity>
+          
           <a-plane cursor-listener="target: #cursor" width="20" height="10" scale="1 1 1" material="color: #000; opacity: 1" position="0 -18 -99">
 
           </a-plane>
@@ -71,6 +69,7 @@
           <a-plane width="50" height="50" scale="1 1 1" material="color: black;" position="0 0 0">
           </a-plane>
 
+          <a-plane cursor-listener width="25" height="10" scale="1 1 1" material="color: black; opacity: 1" position="0 -10 -99">
           </a-plane>
 
         </a-entity>
