@@ -18,11 +18,11 @@
   <body>
 
     <!-- Fog for dimming objects in distance -->
-    <a-scene physics="gravity: 0;" canvas fog="type: linear; color: #40a4df; far: 2200; near: 0;">
+    <a-scene physics="gravity: 0;" canvas fog="type: linear; color: #40a4df; far: 1000; near: 0;">
       <a-entity game>
         <asset>
           <a-mixin id="obstacle" static-body geometry="primitive: box" material="opacity: 0; color: transparent;" obstacle></a-mixin>
-          <a-mixin id="tunnel" static-body geometry="primitive: cylinder; height: 6000; radius: 100; open-ended: true" position="0 0 -3000" rotation="-90 0 0" material="src: url(https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272); shader: flat; side: double; opacity: 0.8;" tunnel></a-mixin>
+          <a-mixin id="tunnel" static-body geometry="primitive: cylinder; height: 6000; radius: 100; open-ended: true" position="0 0 -3000" rotation="-90 0 0" material="src: url(https://media.giphy.com/media/JXHhI4o9NCf8k/giphy.gif); shader: flat; side: double; opacity: 0.8;" tunnel></a-mixin>
           <a-mixin id="level" level></a-mixin>
         </asset>
 
@@ -53,10 +53,10 @@
           <a-entity text="value: DODGE SHARKS;" position="16.5 0 -80" scale="50 50 5">
           </a-entity>
 
-          <a-entity text="value: Focus here to start;" position="8.8 -6.2 -80" scale="28 28 5">
+          <a-entity cursor-listener="target: #cursor" text="value: Focus here to start;" position="8.8 -6.2 -80" scale="28 28 5">
           </a-entity>
-          
-          <a-plane cursor-listener="target: #cursor" width="20" height="10" scale="1 1 1" material="color: #000; opacity: 1" position="0 -18 -99">
+
+          <a-plane cursor-listener="target: #cursor" width="25" height="6" scale="1 1 1" material="color: #000; opacity: 1" position="0 -10 -99">
 
           </a-plane>
 
