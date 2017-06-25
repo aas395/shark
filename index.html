@@ -47,6 +47,20 @@
 
           <audio id="river" src="https://cdn.glitch.com/f6776a32-7c26-4f5c-9cfd-dfedc35a5ea3%2Fshark-final.mp3?1498407744096" preload="auto" autoplay="true" loop="true"></audio>
 
+          <a-entity id="arms"
+               scale="1.5 1.5 1.5"
+               position="0 0 0"
+               rotation="0 0 180"
+               obj-model="obj: url(https://cdn.glitch.com/9d6d1bf1-758a-4a15-86d4-0608c7d98df9%2Farms4.obj?1498406090710); mtl: url(https://cdn.glitch.com/9d6d1bf1-758a-4a15-86d4-0608c7d98df9%2Farms4.mtl?1498406408810)">
+
+                <a-animation attribute="rotation"
+                dur="3000"
+                easing="linear"
+                fill="forwards"
+                to="-360 0 180"
+                repeat="indefinite"></a-animation>
+          </a-entity>
+
         </a-entity>
 
         <!-- Intro Block -->
