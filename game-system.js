@@ -56,7 +56,6 @@ AFRAME.registerSystem('game', {
 
     document.querySelector("#intro-modal").setAttribute('visible', false);
     document.querySelector("#cursor").setAttribute('visible', false);
-
   },
   endGame: function() {
     var that = this;
@@ -75,12 +74,14 @@ AFRAME.registerSystem('game', {
 
     var intervalId = setInterval(function(){
       if(timeRemaining == 0) {
+        document.querySelector('#countdown').setAttribute('text', {align: "center",  value: "5"  });
         clearInterval(intervalId);
-        document.querySelector('#countdown').setAttribute('text', "value: 5;");
+        return;
       }
+
       timeRemaining--;
-      document.querySelector('#countdown').setAttribute('text', "value: " + timeRemaining + ";");
-    },1000);
+      document.querySelector('#countdown').setAttribute('text', {align: "center",  value: "" + timeRemaining });
+      },1000);
 
     setTimeout(function() {
       that.resetGame();
