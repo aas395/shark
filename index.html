@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>SharkVR</title>
-    <meta name="description" content="SharkVR Game">
+    <title>Dodge Sharks</title>
+    <meta name="description" content="Dodge Sharks">
     <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.8.4/dist/aframe-extras.min.js"></script>
     <script src="https://cdn.rawgit.com/ngokevin/aframe-physics-components/master/dist/aframe-physics-components.min.js"></script>
@@ -19,12 +19,16 @@
   <body>
 
     <!-- Fog for dimming objects in distance -->
-    <a-scene physics="gravity: 0;" canvas fog="type: linear; color: #40a4df; far: 2200; near: 0;">
+    <a-scene physics="gravity: 0;" canvas fog="type: linear; color: #40a4df; far: 1000; near: 0;">
       <a-entity game>
         <asset>
           <a-mixin id="obstacle" static-body geometry="primitive: box" material="opacity: 0; color: transparent;" obstacle></a-mixin>
-          <a-mixin id="tunnel" static-body rotation="-90 0 0" material="src: url(https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272); shader: flat; side: back; opacity: 0.8;" tunnel></a-mixin>
+
+<!--           <a-mixin id="tunnel" static-body rotation="-90 0 0" material="src: url(https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272); shader: flat; side: back; opacity: 0.8;" tunnel></a-mixin> -->
           <a-mixin id="level" class="level" level></a-mixin>
+
+          <a-mixin id="tunnel" static-body geometry="primitive: cylinder; height: 6000; radius: 100; open-ended: true" position="0 0 -3000" rotation="-90 0 0" material="src: url(https://media.giphy.com/media/JXHhI4o9NCf8k/giphy.gif); shader: flat; side: double; opacity: 0.8;" tunnel></a-mixin>
+
         </asset>
 
         <a-entity levels-container>
@@ -32,7 +36,11 @@
         </a-entity>
 
         <!-- Camera -->
-        <a-entity id="character" position="0 0 0" kinematic-body listener="target: #character" camera universal-controls>
+        <a-entity
+          id="character"
+          position="0 0 0"
+          kinematic-body listener="target: #character"
+          camera universal-controls>
 
           <!--Cursor-->
           <a-entity id="cursor" visible="true"  position="0 0 -3"
@@ -42,25 +50,65 @@
                 cursor="fuse: true">
           </a-entity>
 
-          <a-entity class="timer" geometry="primitive: plane; width: 0.3; height: 0.1;" position="0 0.7 -0.9" rotation="40 0 0" material="shader: flat; opacity: 0; transparent: true;">
-            <a-entity id="time"></a-entity>
+          <!-- End Modal  -->
+          <a-entity id="end-modal" ui-modal visible="false">
+            <a-entity text="align: center; value: GAME OVER;" position="0 0.01 -.05" width="100" height="100" scale="0.1 0.1 0.1"></a-entity>
+            <a-entity text="align: center; value: Restarting;" position="0 0 -.05" width="100" height="100" scale="0.05 0.05 0.05"></a-entity>
+            <a-entity id="countdown" text=" align: center; value: 5;" position="0 -.01 -.05" width="100" height="100" scale="0.2 0.2 0.2"></a-entity>
+            <a-plane width="100" height="100" scale="100 100 100" material="color: tomato; opacity: 0.7;" position="50 50 -0.1"></a-plane>
+
           </a-entity>
+
+          <audio id="river" src="https://cdn.glitch.com/f6776a32-7c26-4f5c-9cfd-dfedc35a5ea3%2Fshark-final.mp3?1498407744096" preload="auto" autoplay="true" loop="true"></audio>
+
+          <a-entity id="arms"
+               scale="1.5 1.5 1.5"
+               position="0 0 0"
+               rotation="0 0 180"
+               obj-model="obj: url(https://cdn.glitch.com/9d6d1bf1-758a-4a15-86d4-0608c7d98df9%2Farms4.obj?1498406090710); mtl: url(https://cdn.glitch.com/9d6d1bf1-758a-4a15-86d4-0608c7d98df9%2Farms4.mtl?1498408758877)">
+
+                <a-animation attribute="rotation"
+                dur="3000"
+                easing="linear"
+                fill="forwards"
+                to="-360 0 180"
+                repeat="indefinite"></a-animation>
+          </a-entity>
+
         </a-entity>
+
 
         <!-- Intro Block -->
 
-        <a-entity id="intro-modal" ui-modal visible="true">
+        <a-entity id="intro-modal" ui-modal visible="true" position="1.25 1.25 0">
 
-          <a-plane width="50" height="50" scale="1 1 1" material="src: url(https://media.giphy.com/media/JXHhI4o9NCf8k/giphy.gif)" position="0 0 -100">
+
+
+          <a-plane width="200" height="200" material="color: #000;" position="0 2 -5" rotation="0 180 0">
           </a-plane>
-          <a-asset-item id="BoldFont" src="https://rawgit.com/rollup/three-jsnext/master/examples/fonts/helvetiker_bold.typeface.json"></a-asset-item>
 
-          <a-entity id="title" text-geometry="value: Deep Sh*t; font: #BoldFont; size: 12; height: .3;" material="color: #D0F6FC;" position="0 -2 -98"></a-entity>
-          <a-entity id="subhead" text-geometry="value: Click anywhere to begin.; font: #BoldFont; size: 3; height: .3;" material="color: #D0F6FC;" position="0 -5 -98"></a-entity>
-
-          <a-plane cursor-listener="target: #cursor" width="20" height="10" scale="1 1 1" material="color: #000; opacity: 1" position="0 -18 -99">
-
+          <a-plane width="200" height="200" material="color: #000;" position="-70 2 -5" rotation="0 90 0">
           </a-plane>
+
+          <a-plane width="200" height="200" material="color: #000;" position="70 2 -5" rotation="0 -90 0">
+          </a-plane>
+
+          <a-plane width="200" height="200" material="color: #000;" position="0 70 -5" rotation="90 0 0">
+          </a-plane>
+
+          <a-plane width="200" height="200" material="color: #000;" position="0 -70 -5" rotation="-90 0 0">
+          </a-plane>
+
+          <a-plane width="50" height="50" scale="3.5 3.5 .5" transparent="true" material="src: url(_assets/shark-teeth.png)" position="0 2 -100">
+          </a-plane>
+
+          <a-entity text="align: center; value: DODGE SHARKS;" position="0 0 -3" scale="6.5 6.5 6.5">
+          </a-entity>
+
+          <a-entity id="this" geometry="primitive: plane" cursor-listener="target: #cursor" width="25" height="6" scale="1.2 .3 1" material="color: #000; opacity: 1" position="0 -0.5 -3">
+            <a-entity cursor-listener="target: #cursor" text=" align: center; value: Focus here to start;" position="0 0 0" scale="2 8 8">
+            </a-entity>
+          </a-entity>
 
         </a-entity>
 
@@ -71,8 +119,8 @@
           <a-plane width="50" height="50" scale="1 1 1" material="color: black;" position="0 0 0">
           </a-plane>
 
+          <a-plane cursor-listener width="25" height="10" scale="1 1 1" material="color: black; opacity: 1" position="0 -10 -99">
           </a-plane>
-
         </a-entity>
 
         <!-- Lighting and background -->

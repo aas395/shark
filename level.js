@@ -29,12 +29,10 @@ AFRAME.registerComponent('level', {
 	init: function () {
 		var Game = document.querySelector('a-scene').systems['game'];
 		var prevLevel = document.querySelectorAll('[mixin=level]')[0];
-		console.log(prevLevel.components)
+
 		this.data.levelStart = Game.data.level > 0 ? prevLevel.components.level.data.levelEnd : 0;
 		this.data.levelLength = Game.data.level ? this.data.levelLength * (Game.data.level * 1.2) : this.data.levelLength;
 		this.data.levelEnd = this.data.levelStart + this.data.levelLength;
-		console.log(this.data.levelStart)
-		console.log(this.data.levelEnd);
 
 		var bufferDistance = Game.data.level == 0 ? 250 : 0;
 
