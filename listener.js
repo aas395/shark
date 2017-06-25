@@ -6,12 +6,13 @@ AFRAME.registerComponent("listener", {
     }
   },
   init: function() {
+    var Game = document.querySelector('a-scene').systems['game'];
     var playerEl = document.querySelector('#character');
     var that = this;
 
     playerEl.addEventListener('collide', function (e) {
       var collidedWithEl = e.detail.body.el;
-      console.log('collision');
+      console.log(e.detail.body.el);
 
       if(collidedWithEl.hasAttribute('tunnel')) {
         console.log('Collided with the wall');
@@ -26,6 +27,11 @@ AFRAME.registerComponent("listener", {
             x: xPosition + (5 * xDirectionAdjustment),
             y: yPosition + (5 * yDirectionAdjustment)
         });
+      }
+
+      if (collidedWithEl.hasAttribute('obstacle')) {
+        console.log('Eaten by Shark');
+        Game.endGame();
       }
     });
   },

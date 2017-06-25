@@ -11,9 +11,6 @@ AFRAME.registerComponent('level', {
 	},
 	multiple: true,
 	init: function () {
-		// var Game = document.querySelector('a-scene').systems['game'];
-
-		// Game.setLevelEnd(Game.data.levelStart + this.el.getAttribute('geometry').height);
 		this.addTunnel();
 		this.addObstacles();
 	},
@@ -52,10 +49,27 @@ AFRAME.registerComponent('level', {
 		for(var i = 0; i < obstacles.length; i++) {
 			var currentObstacle = obstacles[i];
 			var building = document.createElement('a-entity');
+			var shark = document.createElement('a-entity');
 
-			var depth = 40;
-			var width = 40;
-			var height = 40;
+			shark.setAttribute('class', 'shark');
+			shark.setAttribute('scale', '5 5 5');
+			shark.setAttribute('rotation', '0 0 0');
+			shark.setAttribute('animation-mixer', 'clip: swim;');
+			shark.setAttribute('json-model', {src: 'url(https://cdn.rawgit.com/brendanluu/brendanluu.github.io/407d10d6/assets/sharky.json)'});
+
+			building.appendChild(shark);
+/*<a-entity class="obstacle" static-body geometry="primitive: box" material="color: transparent; " obstacle>
+	<a-entity class="shark"
+		scale="5 5 5"
+		rotation="0 0 0"
+		animation-mixer="clip: swim"
+		json-model="src: url(https://cdn.rawgit.com/brendanluu/brendanluu.github.io/407d10d6/assets/sharky.json);"
+	></a-entity>
+</a-entity> */
+
+			var depth = 51;
+			var width = 32;
+			var height = 18;
 
 			currentObstacle.geometry = "depth:" + depth + "; width:" + width + "; height: " + height + ";";
 
@@ -74,7 +88,7 @@ AFRAME.registerComponent('level', {
 				newAttribute.value = currentObstacle[key];
 				building.setAttributeNode(newAttribute);
 			}
-			// console.log(document.querySelector('[tunnel]'));
+
 			obstaclesContainer.appendChild(building);
 		}
 		this.el.appendChild(obstaclesContainer);
