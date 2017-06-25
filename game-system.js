@@ -54,6 +54,12 @@ AFRAME.registerSystem('game', {
     document.querySelector("#intro-modal").setAttribute('visible', false);
     document.querySelector("#cursor").setAttribute('visible', false);
   },
+  endGame: function() {
+    console.log(this);
+    this.data.forwardMotionCoefficient = 0;
+    this.data.hasStarted = false;
+    document.querySelector("#end-modal").setAttribute('visible', true);
+  },
   startTimer: function() {
     var that = this;
     //Using the date/time is the only thing I could think to use as a timer
