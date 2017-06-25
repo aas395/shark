@@ -5,7 +5,7 @@
     <meta name="description" content="SharkVR Game">
     <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.8.4/dist/aframe-extras.min.js"></script>
-    <script src="https://cdn.rawgit.com/ngokevin/aframe-physics-components/master/dist/aframe-physics-components.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v1.4.1/dist/aframe-physics-system.min.js"></script>
     
     <script>
       AFRAME.registerSystem('game', {
@@ -173,7 +173,7 @@
     <!-- Fog for dimming objects in distance -->
     <a-scene physics="gravity: 0;" canvas fog="type: linear; color: #40a4df; far: 2200; near: 0;">
       <asset>
-        <a-mixin id="build" physics-body="static-body" geometry="primitive: box" material="shader: standard; metalness: 0.6; src: url(https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272)"></a-mixin>
+        <a-mixin id="build" static-body geometry="primitive: box" material="shader: standard; metalness: 0.6; src: url(https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272)"></a-mixin>
       </asset>
    
       <a-entity static-body id="cylinder" geometry="primitive: cylinder; height: 6000; radius: 100; open-ended: true" position="0 0 1000" rotation="-90 0 0" material="src: url(https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272); shader: flat; side: double; opacity: 0.8;"></a-entity>
