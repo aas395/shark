@@ -23,6 +23,10 @@ AFRAME.registerSystem('game', {
     currentLevel: {
       type : "number",
       default : 1
+    },
+    timerIntervalId: {
+      type: "number",
+      default: 0
     }
   },  // System schema. Parses into `this.data`.
   init: function () {
@@ -44,21 +48,48 @@ AFRAME.registerSystem('game', {
     this.data.hasStarted = hasStarted;
   },
   startGame: function() {
+    this.resetGame();
     this.data.forwardMotionCoefficient = 2;
-    this.data.score = 0;
-    this.data.time = 0;
-    this.data.hasStarted = true;
-    this.data.currentLevel = 1;
+
     this.startTimer();
+    this.data.hasStarted = true;
 
     document.querySelector("#intro-modal").setAttribute('visible', false);
     document.querySelector("#cursor").setAttribute('visible', false);
   },
   endGame: function() {
-    console.log(this);
+    var that = this;
+
     this.data.forwardMotionCoefficient = 0;
     this.data.hasStarted = false;
-    document.querySelector("#end-modal").setAttribute('visible', true);
+
+    var endModal = document.querySelector("#end-modal");
+    var endDistance = this.data.distance;
+
+    endModal.setAttribute('position', {x:0,  y:0, z: -endDistance - 50 });
+    endModal.setAttribute('visible', true);
+
+    clearInterval(this.data.timerIntervalId);
+
+    setTimeout(function() {
+      that.resetGame();
+      that.startGame();
+    }, 5000);
+  },
+  resetGame: function(){
+    document.querySelector("#character").setAttribute('position', {x:0,  y:0, z: 0 });
+
+    this.data.score = 0;
+    this.data.time = 0;
+    this.data.currentLevel = 1;
+
+    this.updateTimer(0,0);
+
+    var endModal = document.querySelector("#end-modal");
+    endModal.setAttribute('visible', false);
+  },
+  updateTimer: function(minutes, seconds) {
+    document.getElementById("time").setAttribute('text', 'value: ' + minutes + "m " + seconds + "s ;");
   },
   startTimer: function() {
     var that = this;
@@ -67,14 +98,14 @@ AFRAME.registerSystem('game', {
     var initialTime = new Date().getTime();
 
     // Update the count down every 1 second
-    var x = setInterval(function() {
+    this.data.timerIntervalId = setInterval(function() {
       // // Time calculations for minutes and seconds
       that.data.time++;
       var minutes = Math.floor(that.data.time / 60);
       var seconds = Math.floor(that.data.time % 60);
 
       // Display the result in the element with id="demo"
-      document.getElementById("time").setAttribute('text', 'value: ' + minutes + "m " + seconds + "s ;");
+      that.updateTimer(minutes, seconds);
     }, 1000);
 
     //End of Timer Script
