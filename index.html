@@ -6,16 +6,21 @@
     <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.8.4/dist/aframe-extras.min.js"></script>
     <script src="https://cdn.rawgit.com/ngokevin/aframe-physics-components/master/dist/aframe-physics-components.min.js"></script>
-    
+
     <script src="game-system.js"></script>
     <script src="levels-container.js"></script>
     <script src="level.js"></script>
     <script src="tunnel.js"></script>
     <script src="listener.js"></script>
     <script src="timer.js"></script>
+    <script src="button.js"></script>
   </head>
   <body>
- 
+
+    <script type="text/javascript">
+       startGame();
+    </script>
+
     <!-- Fog for dimming objects in distance -->
     <a-scene physics="gravity: 0;" canvas fog="type: linear; color: #40a4df; far: 2200; near: 0;">
       <a-entity game>
@@ -30,19 +35,47 @@
         </a-entity>
 
         <!-- Camera -->
-        <a-entity id="character" position="0 10 0" kinematic-body listener="target: #character" camera universal-controls>
-          <a-entity class="timer" geometry="primitive: plane; width: 0.3; height: 0.1;" position="0 0.7 -0.9" rotation="40 0 0" material="shader: flat; opacity: 0.8; transparent: true; src: url(images/health-bar.png)">
+        <a-entity id="character" position="0 0 0" kinematic-body listener="target: #character" camera universal-controls>
+
+          <!--Cursor-->
+          <a-entity position="0 0 -3"
+                geometry="primitive: ring; radiusOuter: 0.30;
+                          radiusInner: 0.20;"
+                material="color: cyan; shader: flat"
+                cursor="fuse: true">
+             <a-animation begin="cursor-fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
+          </a-entity>
+
+          <a-entity class="timer" geometry="primitive: plane; width: 0.3; height: 0.1;" position="0 0.7 -0.9" rotation="40 0 0" material="shader: flat; opacity: 0; transparent: true; src: url(images/health-bar.png)">
             <a-entity id="time"></a-entity>
           </a-entity>
         </a-entity>
 
+        <!-- Intro Block -->
+
+        <a-entity ui-modal visible="true">
+
+          <a-plane width="50" height="50" scale="1 1 1" material="src: url(https://media.giphy.com/media/JXHhI4o9NCf8k/giphy.gif)" position="0 0 -100">
+          </a-plane>
+          <a-asset-item id="BoldFont" src="https://rawgit.com/rollup/three-jsnext/master/examples/fonts/helvetiker_bold.typeface.json"></a-asset-item>
+
+          <a-entity id="title" text-geometry="value: Deep Sh*t; font: #BoldFont; size: 12; height: .3;" material="color: D0F6FC;" position="0 -2 -98"></a-entity>
+          <a-entity id="subhead" text-geometry="value: Click anywhere to begin.; font: #BoldFont; size: 3; height: .3;" material="color: D0F6FC;" position="0 -5 -98"></a-entity>
+
+          <a-plane cursor-listener width="20" height="10" scale="1 1 1" material="color: #000; opacity: 1" position="0 -18 -99">
+
+          </a-plane>
+
+        </a-entity>
+        <!--  -->
+
         <!-- Lighting and background -->
         <a-sky color="#cccccc"></a-sky>
       </a-entity>
-   
+
     </a-scene>
-    
-    
+
+
   </body>
-  
+
 </html>

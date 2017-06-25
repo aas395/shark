@@ -18,7 +18,7 @@ AFRAME.registerSystem('game', {
     },
     forwardMotionCoefficient: {
       type : "number",
-      default : 2
+      default : 0
     },
     currentLevel: {
       type : "number",
@@ -30,7 +30,7 @@ AFRAME.registerSystem('game', {
   },
   tick: function() {
     if(this.data.hasStarted) {
-      this.updateScore();  
+      this.updateScore();
     }
   },
   setDistance: function(distance) {
@@ -39,5 +39,19 @@ AFRAME.registerSystem('game', {
   },
   updateScore: function() {
     this.data.score = this.data.distance;
+  },
+  setHasStarted: function(hasStarted) {
+    this.data.hasStarted = hasStarted;
+  },
+  startGame: function() {
+    this.data.forwardMotionCoefficient = 2;
+    this.data.score = 0;
+    this.data.time = 0;
+    this.data.hasStarted = true;
+    this.data.currentLevel = 1;
+
+    if(document.querySelector(modal)) {
+        //hide modal
+    }
   }
-});    
+});

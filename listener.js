@@ -1,5 +1,5 @@
 AFRAME.registerComponent("listener", {
-  schema : 
+  schema :
   {
     target: {
       type: 'selector'
@@ -19,7 +19,7 @@ AFRAME.registerComponent("listener", {
         var xPosition = e.detail.target.position.x;
         var yPosition = e.detail.target.position.y;
 
-        var xDirectionAdjustment = xPosition > 0 ? -1 : 1; 
+        var xDirectionAdjustment = xPosition > 0 ? -1 : 1;
         var yDirectionAdjustment = yPosition > 0 ? -1 : 1;
 
         document.querySelector('#character').setAttribute('position', {
@@ -31,7 +31,7 @@ AFRAME.registerComponent("listener", {
   },
   tick : function() {
       var Game = document.querySelector('a-scene').systems['game'];
-      const targetItem = this.data.target;            
+      const targetItem = this.data.target;
       var targetPosition = targetItem.getAttribute('position');
       const direction = this.el.components.camera.camera.getWorldDirection();
       var forwardMotionCoefficient = Game.data.forwardMotionCoefficient;
@@ -44,6 +44,6 @@ AFRAME.registerComponent("listener", {
         z: targetPosition.z + -forwardMotionCoefficient
       };
 
-      this.el.setAttribute('position', currentPosition); 
+      this.el.setAttribute('position', currentPosition);
   }
 });
