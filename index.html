@@ -36,6 +36,7 @@
           position="0 0 -50"
           kinematic-body listener="target: #character"
           camera universal-controls>
+          
           <!--Cursor-->
           <a-entity id="cursor" visible="true"  position="0 0 -3"
                 geometry="primitive: ring; radiusOuter: 0.30;
@@ -76,6 +77,23 @@
         <!-- Intro Block -->
 
         <a-entity id="intro-modal" ui-modal visible="true">
+
+
+
+          <a-plane width="200" height="200" material="color: #000;" position="0 2 -5" rotation="0 180 0">
+          </a-plane>
+
+          <a-plane width="200" height="200" material="color: #000;" position="-70 2 -5" rotation="0 90 0">
+          </a-plane>
+
+          <a-plane width="200" height="200" material="color: #000;" position="70 2 -5" rotation="0 -90 0">
+          </a-plane>
+
+          <a-plane width="200" height="200" material="color: #000;" position="0 70 -5" rotation="90 0 0">
+          </a-plane>
+
+          <a-plane width="200" height="200" material="color: #000;" position="0 -70 -5" rotation="-90 0 0">
+          </a-plane>
 
           <a-plane width="50" height="50" scale="3.5 3.5 .5" transparent="true" material="src: url(_assets/shark-teeth.png)" position="0 2 -100">
           </a-plane>
