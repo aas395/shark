@@ -1,8 +1,27 @@
 AFRAME.registerComponent('cursor-listener', {
-  init: function () {
-    var Game = document.querySelector('a-scene').systems['game'];
-    this.el.addEventListener('click', function (evt) {
-      Game.startGame();
-    });
-  }
+	schema: {
+		target: {
+			type: "selector"
+		}
+	},
+	init: function () {
+		var Game = document.querySelector('a-scene').systems['game'];
+		var that = this;
+
+		this.el.addEventListener('mouseenter', function (evt) {
+			var animation = document.createElement("a-animation");
+			animation.setAttribute("begin", "cursor-fusing");
+			animation.setAttribute("easing", "ease-in");
+			animation.setAttribute("attribute", "scale");
+			animation.setAttribute("fill", "forwards");
+			animation.setAttribute("from", "1 1 1");
+			animation.setAttribute("to", "0.1 0.1 0.1");
+			animation.setAttribute("dur", 1500);
+			that.data.target.appendChild(animation);
+		});
+
+		this.el.addEventListener('click', function (evt) {
+			Game.startGame();
+		});
+	}
 });
