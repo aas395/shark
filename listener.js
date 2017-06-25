@@ -13,7 +13,7 @@ AFRAME.registerComponent("listener", {
       var collidedWithEl = e.detail.body.el;
       console.log('collision');
 
-      if(collidedWithEl.id == 'cylinder') {
+      if(collidedWithEl.hasAttribute('tunnel')) {
         console.log('Collided with the wall');
 
         var xPosition = e.detail.target.position.x;

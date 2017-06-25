@@ -23,14 +23,6 @@ AFRAME.registerSystem('game', {
     currentLevel: {
       type : "number",
       default : 1
-    },
-    levelStart: {
-      type : "number",
-      default : 0
-    },
-    levelEnd: {
-      type : "number",
-      default : 0
     }
   },  // System schema. Parses into `this.data`.
   init: function () {
@@ -47,12 +39,5 @@ AFRAME.registerSystem('game', {
   },
   updateScore: function() {
     this.data.score = this.data.distance;
-  },
-  setLevelStart: function(start) {
-    this.data.levelStart = start;
-  },
-  setLevelEnd: function(end) {
-    this.data.levelEnd = end;
-    // console.log(this.data.levelEnd)
   }
 });    
