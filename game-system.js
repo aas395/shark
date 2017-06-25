@@ -83,7 +83,7 @@ AFRAME.registerSystem('game', {
     this.data.time = 0;
     this.data.currentLevel = 1;
 
-    this.updateTimer(0,0);
+    // this.updateTimer(0,0);
 
     var endModal = document.querySelector("#end-modal");
     endModal.setAttribute('visible', false);
@@ -105,7 +105,7 @@ AFRAME.registerSystem('game', {
       var seconds = Math.floor(that.data.time % 60);
 
       // Display the result in the element with id="demo"
-      that.updateTimer(minutes, seconds);
+      // that.updateTimer(minutes, seconds);
     }, 1000);
 
     //End of Timer Script
