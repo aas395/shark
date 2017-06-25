@@ -42,10 +42,18 @@
              <a-animation begin="cursor-fusing" easing="ease-in" attribute="scale" fill="forwards" from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
           </a-entity>
 
-          <a-entity class="timer" geometry="primitive: plane; width: 0.3; height: 0.1;" position="0 0.7 -0.9" rotation="40 0 0" material="shader: flat; opacity: 0; transparent: true;">
-            <a-entity id="time"></a-entity>
+
+          <!-- End Modal  -->
+          <a-entity id="end-modal" ui-modal visible="false">
+            <a-entity text="value: GAME OVER;" position="22 2 -10" width="100" height="100" scale="60 60 60"></a-entity>
+            <a-entity text="value: Resetting;" position="12 -0.5 -10" width="100" height="100" scale="30 30 30"></a-entity>
+            <a-entity id="countdown" text="value: 5;" position="14.5 -2 -10" width="100" height="100" scale="30 30 30"></a-entity>
+            <a-plane width="100" height="100" scale="100 100 100" material="color: black; opacity: 0.7;" position="50 50 -12"></a-plane>
+
           </a-entity>
+
         </a-entity>
+
 
         <!-- Intro Block -->
 
@@ -59,19 +67,6 @@
           <a-entity id="subhead" text-geometry="value: Click anywhere to begin.; font: #BoldFont; size: 3; height: .3;" material="color: #D0F6FC;" position="0 -5 -98"></a-entity>
 
           <a-plane cursor-listener="target: #cursor" width="20" height="10" scale="1 1 1" material="color: #000; opacity: 1" position="0 -18 -99">
-
-          </a-plane>
-
-        </a-entity>
-
-
-        <!-- End Modal  -->
-        <a-entity id="end-modal" ui-modal visible="false">
-
-          <a-plane width="50" height="50" scale="1 1 1" material="color: black;" position="0 0 0">
-          </a-plane>
-
-          </a-plane>
 
         </a-entity>
 
