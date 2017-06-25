@@ -49,8 +49,28 @@ AFRAME.registerSystem('game', {
     this.data.time = 0;
     this.data.hasStarted = true;
     this.data.currentLevel = 1;
+    this.startTimer();
 
     document.querySelector("#intro-modal").setAttribute('visible', false);
     document.querySelector("#cursor").setAttribute('visible', false);
+  },
+  startTimer: function() {
+    var that = this;
+    //Using the date/time is the only thing I could think to use as a timer
+    // Gets the initial time
+    var initialTime = new Date().getTime();
+
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+      // // Time calculations for minutes and seconds
+      that.data.time++;
+      var minutes = Math.floor(that.data.time / 60);
+      var seconds = Math.floor(that.data.time % 60);
+
+      // Display the result in the element with id="demo"
+      document.getElementById("time").setAttribute('text', 'value: ' + minutes + "m " + seconds + "s ;");
+    }, 1000);
+
+    //End of Timer Script
   }
 });
