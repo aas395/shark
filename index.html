@@ -98,15 +98,13 @@
           <a-plane width="50" height="50" scale="3.5 3.5 .5" transparent="true" material="src: url(_assets/shark-teeth.png)" position="0 2 -100">
           </a-plane>
 
-          <a-entity text="value: DODGE SHARKS;" position="16.5 0 -80" scale="50 50 5">
+          <a-entity text="align: center; value: DODGE SHARKS;" position="0 0 -53" scale="6.5 6.5 6.5">
           </a-entity>
 
-          <a-entity cursor-listener="target: #cursor" text="value: Focus here to start;" position="8.8 -6.2 -80" scale="28 28 5">
+          <a-entity id="this" geometry="primitive: plane" cursor-listener="target: #cursor" width="25" height="6" scale="1.2 .3 1" material="color: #000; opacity: 1" position="0 -0.5 -53">
+            <a-entity cursor-listener="target: #cursor" text=" align: center; value: Focus here to start;" position="0 0 0" scale="2 8 8">
+            </a-entity>
           </a-entity>
-
-          <a-plane cursor-listener="target: #cursor" width="25" height="6" scale="1 1 1" material="color: #000; opacity: 1" position="0 -10 -99">
-
-          </a-plane>
 
         </a-entity>
 
