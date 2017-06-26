@@ -1,0 +1,17 @@
+#debug-console {
+	display: none;
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	color: #000;
+	z-index: 100;
+	width: 20%;
+	background-color: #fff;
+	padding: 5px;
+}
+#debug-console.visible {
+	display: block;
+}
+#debug-console p {
+	margin: 0 0 5px;
+}
