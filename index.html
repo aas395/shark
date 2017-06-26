@@ -73,7 +73,7 @@
                 geometry="primitive: ring; radiusOuter: 0.30;
                           radiusInner: 0.20;"
                 material="color: cyan; shader: flat"
-                cursor="fuse: true">
+                cursor="fuse: true; fuse-timeout: 1200;">
           </a-entity>
 
           <!-- End Modal  -->
@@ -102,36 +102,70 @@
         </a-entity>
 
 
-        <!-- Intro Block -->
-
+        <!-- Intro Box -->
         <a-entity id="intro-modal" ui-modal visible="true" position="0 0 0">
 
-
-
-          <a-plane width="200" height="200" material="color: #000;" position="0 2 -5" rotation="0 180 0">
+          <!-- front -->
+          <a-plane width="50" height="50" scale="3.5 3.5 .5" transparent="true" material="src: url(_assets/shark-teeth.png); shader:flat; transparent: true;" position="0 2 -50">
           </a-plane>
 
-          <a-plane width="200" height="200" material="color: #000;" position="-70 2 -5" rotation="0 90 0">
+          <!-- back -->
+          <a-plane id="opening-box-back" width="200" height="200" material="color: #000; shader: flat;" position="0 2 70" rotation="0 180 0">
           </a-plane>
 
-          <a-plane width="200" height="200" material="color: #000;" position="70 2 -5" rotation="0 -90 0">
+          <!-- left -->
+          <a-plane width="200" height="200" material="color: #000; shader: flat;" position="-70 2 -5" rotation="0 90 0">
           </a-plane>
 
-          <a-plane width="200" height="200" material="color: #000;" position="0 70 -5" rotation="90 0 0">
+          <!-- right -->
+          <a-plane width="200" height="200" material="color: #000; shader: flat;" position="70 2 -5" rotation="0 -90 0">
           </a-plane>
 
-          <a-plane width="200" height="200" material="color: #000;" position="0 -70 -5" rotation="-90 0 0">
+          <!-- top -->
+          <a-plane width="200" height="200" material="color: #000; shader: flat;" position="0 70 -5" rotation="90 0 0">
           </a-plane>
 
-          <a-plane width="50" height="50" scale="3.5 3.5 .5" transparent="true" material="src: url(_assets/shark-teeth.png)" position="0 2 -100">
+          <!-- bottom -->
+          <a-plane width="200" height="200" material="color: #000; shader: flat;" position="0 -70 -5" rotation="-90 0 0">
           </a-plane>
 
-          <a-entity text="align: center; value: DODGE SHARKS;" position="0 0 -3" scale="6.5 6.5 6.5">
-          </a-entity>
-
-          <a-entity id="this" geometry="primitive: plane" cursor-listener="target: #cursor" width="25" height="6" scale="1.2 .3 1" material="color: #000; opacity: 1" position="0 -0.5 -3">
-            <a-entity cursor-listener="target: #cursor" text=" align: center; value: Focus here to start;" position="0 0 0" scale="2 8 8">
+          <a-text align="center" text="value: DODGE SHARKS;" position="0 0 -3" scale="1.4 1.4 1.4"></a-text>
+          
+          <a-entity id="start-button"
+            geometry="primitive: plane; height: .55; width: 2;"
+            scale="1 1 1"
+            material="color: #000; opacity: 1"
+            position="0 -.75 -3">
+            <a-text align="center" text="value: Start;" position="0 .1 0"></a-text>
+            
+            <a-entity id="status-bar-container" position="0 -.1 .01" material="color: gray;" geometry="primitive: plane; height: .1; width: 1">
+              <a-entity id="status-bar-progress" position="0 0 .001" material="color: cyan;" geometry="primitive: plane; height: .1; width: 0">
+                <a-animation 
+                  attribute="geometry.width"
+                  dur="1200"
+                  easing="ease-in-out"
+                  fill="none"
+                  from="0"
+                  to="1"
+                  begin="button-mouseover"
+                  end="button-mouseout">
+                </a-animation>
+                <a-animation 
+                  attribute="geometry.width"
+                  dur="0"
+                  to="0"
+                  begin="button-mouseout">
+                </a-animation>
+              </a-entity>
             </a-entity>
+
+            <!-- to prevent status bar animation from causing mouseout and canceling itself -->
+            <a-entity id="start-button-mask"
+              cursor-listener="target: #cursor"
+              position="0 0 .1"
+              material="transparent: true; opacity:0;"
+              geometry="primitive: plane; height: .55; width: 2">
+              </a-entity>
           </a-entity>
 
         </a-entity>
