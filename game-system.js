@@ -34,12 +34,6 @@ AFRAME.registerSystem('game', {
     }
   },  // System schema. Parses into `this.data`.
   init: function () {
-
-    this.data.debug = false;
-
-    if(this.data.debug == true) {
-      document.querySelector('#debug-console').className = 'visible';
-    }
     // this.el.appendChild('<a-entity physics-body="static-body" mixin="build" geometry="depth: 150; width: 150; height: 140;" position="110 69 1500" material="src: url(https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272)"></a-entity>')
   },
   tick: function() {

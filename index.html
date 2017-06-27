@@ -9,19 +9,6 @@
 
     <link rel="stylesheet" href="./style.css" />
 
-    <!-- <script>
-      window.onload = function() {
-        function debug(message) {
-          console.log(message);
-
-          var textEntity = document.createElement('p');
-          textEntity.innerHTML = message;
-          document.querySelector('#debug-console').appendChild(textEntity);
-        }
-        debug('test');
-      }
-    </script> -->
-
     <script src="game-system.js"></script>
     <script src="levels-container.js"></script>
     <script src="level.js"></script>
@@ -117,22 +104,8 @@
           <!-- back -->
           <a-plane id="opening-box-back" width="5" height="5" material="color: #080808; side: back; shader: flat;" position="0 0 2.5" rotation="0 0 0"></a-plane>          
 
-          <a-entity geometry="primitive: cylinder; height: 5; open-ended: true; radius: 2.5" id="opening-box-walls" height="10" material="color: #000; side: back;" position="0 0 0" rotation="-90 0 0"></a-entity>          
-
-          <!-- left -->
-          <!-- <a-plane id="opening-box-left" width="2.5" height="2.5" material="color: #101010;" position="-1.25 0 0" rotation="0 90 0"></a-plane> -->
-
-          <!-- right -->
-          <!-- <a-plane id="opening-box-right" width="2.5" height="2.5" material="color: #101010;" position="1.25 0 0" rotation="0 -90 0"></a-plane> -->
-
-          <!-- top -->
-          <!-- <a-plane id="opening-box-top" width="2.5" height="2.5" material="color: #000;" position="0 1.25 0" rotation="90 0 0"></a-plane> -->
-
-          <!-- bottom -->
-          <!-- <a-plane id="opening-box-bottom" width="2.5" height="2.5" material="color: #000;" position="0 -1.25 0" rotation="-90 0 0"></a-plane> -->
-
-
-
+          <!-- walls -->
+          <a-entity geometry="primitive: cylinder; height: 5; open-ended: true; radius: 2.5" id="opening-box-walls" height="10" material="color: #000; side: back;" position="0 0 0" rotation="-90 0 0"></a-entity>
 
           <a-text align="center" text="value: DODGE SHARKS;" position="0 0 -3" scale="1.4 1.4 1.4"></a-text>
           
@@ -191,12 +164,9 @@
 
         <!-- default lighting -->
         <a-entity light="type: ambient; color: #BBB"></a-entity>
-        <!-- <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity> -->
-
-
+        <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
+        
       </a-entity>
-
-
     </a-scene>
 
 

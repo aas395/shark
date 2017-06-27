@@ -17,7 +17,7 @@ AFRAME.registerComponent('tunnel-checkpoint', {
 			console.log('New level entered: Level ' + Game.data.level);
 
 			if(Game.data.level > 1) {
-
+				// document.querySelector('#levels-container').components['levels-container'].removeLevel(level);
 			}
 		}
 
