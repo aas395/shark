@@ -61,7 +61,7 @@
           position="0 0 0"
           kinematic-body listener="target: #character"
           camera
-          universal-controls
+          universal-controls="movementControls: hmd;"
           sound="src: #river-music"
         >
 
@@ -82,7 +82,6 @@
             <a-entity text="align: center; value: Restarting;" position="0 0 -.05" width="100" height="100" scale="0.05 0.05 0.05"></a-entity>
             <a-entity id="countdown" text=" align: center; value: 5;" position="0 -.01 -.05" width="100" height="100" scale="0.2 0.2 0.2"></a-entity>
             <a-plane width="100" height="100" scale="100 100 100" material="color: tomato; opacity: 0.7;" position="50 50 -0.1"></a-plane>
-
           </a-entity>
 
           <a-entity id="arms"
@@ -105,29 +104,35 @@
         <!-- Intro Box -->
         <a-entity id="intro-modal" ui-modal visible="true" position="0 0 0">
 
+          <!-- opening box back light -->
+          <a-light id="light-opening-box-back" color="#fff" type="point" position="0 0 -7" light="angle:0;color:#6dde62;decay:10;distance:100;intensity:1.5">
+          </a-light>
+
+          <!-- opening box walls -->
+
+
           <!-- front -->
-          <a-plane width="50" height="50" scale="3.5 3.5 .5" transparent="true" material="src: url(_assets/shark-teeth.png); shader:flat; transparent: true;" position="0 2 -50">
-          </a-plane>
+          <a-plane width="50" height="50" scale="3.5 3.5 .5" transparent="true" material="src: url(_assets/shark-teeth.png); transparent: true;" position="0 2 -50"></a-plane>
 
           <!-- back -->
-          <a-plane id="opening-box-back" width="200" height="200" material="color: #000; shader: flat;" position="0 2 70" rotation="0 180 0">
-          </a-plane>
+          <a-plane id="opening-box-back" width="5" height="5" material="color: #080808; side: back; shader: flat;" position="0 0 2.5" rotation="0 0 0"></a-plane>          
+
+          <a-entity geometry="primitive: cylinder; height: 5; open-ended: true; radius: 2.5" id="opening-box-walls" height="10" material="color: #000; side: back;" position="0 0 0" rotation="-90 0 0"></a-entity>          
 
           <!-- left -->
-          <a-plane width="200" height="200" material="color: #000; shader: flat;" position="-70 2 -5" rotation="0 90 0">
-          </a-plane>
+          <!-- <a-plane id="opening-box-left" width="2.5" height="2.5" material="color: #101010;" position="-1.25 0 0" rotation="0 90 0"></a-plane> -->
 
           <!-- right -->
-          <a-plane width="200" height="200" material="color: #000; shader: flat;" position="70 2 -5" rotation="0 -90 0">
-          </a-plane>
+          <!-- <a-plane id="opening-box-right" width="2.5" height="2.5" material="color: #101010;" position="1.25 0 0" rotation="0 -90 0"></a-plane> -->
 
           <!-- top -->
-          <a-plane width="200" height="200" material="color: #000; shader: flat;" position="0 70 -5" rotation="90 0 0">
-          </a-plane>
+          <!-- <a-plane id="opening-box-top" width="2.5" height="2.5" material="color: #000;" position="0 1.25 0" rotation="90 0 0"></a-plane> -->
 
           <!-- bottom -->
-          <a-plane width="200" height="200" material="color: #000; shader: flat;" position="0 -70 -5" rotation="-90 0 0">
-          </a-plane>
+          <!-- <a-plane id="opening-box-bottom" width="2.5" height="2.5" material="color: #000;" position="0 -1.25 0" rotation="-90 0 0"></a-plane> -->
+
+
+
 
           <a-text align="center" text="value: DODGE SHARKS;" position="0 0 -3" scale="1.4 1.4 1.4"></a-text>
           
@@ -183,9 +188,18 @@
 
         <!-- Lighting and background -->
         <a-sky color="#cccccc"></a-sky>
+
+        <!-- default lighting -->
+        <a-entity light="type: ambient; color: #BBB"></a-entity>
+        <!-- <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity> -->
+
+
       </a-entity>
 
+
     </a-scene>
+
+
 
 
   </body>
