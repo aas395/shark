@@ -36,7 +36,7 @@ AFRAME.registerComponent('level', {
 
 		var bufferDistance = Game.data.level == 0 ? 250 : 0;
 
-		this.addTunnel();
+		// this.addTunnel();
 		this.addObstacles({ bufferDistance:  bufferDistance });
 	},
 	addTunnel: function() {
@@ -56,7 +56,7 @@ AFRAME.registerComponent('level', {
 			y: 0,
 			z: -this.data.levelStart - (levelLength / 2)
 		});
-
+	
 		this.el.appendChild(tunnel);
 		this.addLevelCheckpoints();
 	},
@@ -75,7 +75,7 @@ AFRAME.registerComponent('level', {
 		levelStartPlane.setAttribute('static-body', '');
 		levelStartPlane.setAttribute('material', {opacity: 0});
 		levelStartPlane.setAttribute('tunnel-checkpoint', 'type: start');
-		
+
 		this.el.appendChild(levelStartPlane);
 
 		//level 1/4
@@ -92,7 +92,7 @@ AFRAME.registerComponent('level', {
 		levelOneQuarterPlane.setAttribute('static-body', '');
 		levelOneQuarterPlane.setAttribute('material', {opacity: 0});
 		levelOneQuarterPlane.setAttribute('tunnel-checkpoint', 'type: one-quarter');
-		
+
 		this.el.appendChild(levelOneQuarterPlane);
 
 
@@ -110,7 +110,7 @@ AFRAME.registerComponent('level', {
 		levelThreeQuarterPlane.setAttribute('static-body', '');
 		levelThreeQuarterPlane.setAttribute('material', {opacity: 0});
 		levelThreeQuarterPlane.setAttribute('tunnel-checkpoint', 'type: three-quarter');
-		
+
 		this.el.appendChild(levelThreeQuarterPlane);
 	},
 	addObstacles: function(params) {

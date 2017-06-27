@@ -55,6 +55,18 @@
       <a-entity game>
         <a-entity levels-container></a-entity>
 
+        <a-torus arc="360" radius="10000" position="0 -10000 0" rotation="0 -90 0" radius-tubular="100" material="side: back; src: url(https://media.giphy.com/media/JXHhI4o9NCf8k/giphy.gif)">
+          <a-animation
+            attribute="rotation"
+            from="0 -90 0"
+            to="0 -90 -360"
+            direction="linear"
+            dur="100000"
+            repeat="indefinite"
+            easing="linear">
+          </a-animation>
+        </a-torus>
+
         <!-- Camera -->
         <a-entity
           id="character"
@@ -67,7 +79,7 @@
 
           <!--Cursor-->
           <a-entity id="cursor"
-                visible="true"  
+                visible="true"
                 position="0 0 -1"
                 scale= ".1 .1 .1"
                 geometry="primitive: ring; radiusOuter: 0.30;
@@ -130,17 +142,17 @@
           </a-plane>
 
           <a-text align="center" text="value: DODGE SHARKS;" position="0 0 -3" scale="1.4 1.4 1.4"></a-text>
-          
+
           <a-entity id="start-button"
             geometry="primitive: plane; height: .55; width: 2;"
             scale="1 1 1"
             material="color: #000; opacity: 1"
             position="0 -.75 -3">
             <a-text align="center" text="value: Start;" position="0 .1 0"></a-text>
-            
+
             <a-entity id="status-bar-container" position="0 -.1 .01" material="color: gray;" geometry="primitive: plane; height: .1; width: 1">
               <a-entity id="status-bar-progress" position="0 0 .001" material="color: cyan;" geometry="primitive: plane; height: .1; width: 0">
-                <a-animation 
+                <a-animation
                   attribute="geometry.width"
                   dur="1200"
                   easing="ease-in-out"
@@ -150,7 +162,7 @@
                   begin="button-mouseover"
                   end="button-mouseout">
                 </a-animation>
-                <a-animation 
+                <a-animation
                   attribute="geometry.width"
                   dur="0"
                   to="0"

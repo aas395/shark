@@ -59,7 +59,7 @@ AFRAME.registerSystem('game', {
   },
   startGame: function() {
     this.resetGame();
-    this.data.forwardMotionCoefficient = 2;
+    this.data.forwardMotionCoefficient = 0; //Don't move player forward
 
     this.startTimer();
     this.data.hasStarted = true;
