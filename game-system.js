@@ -35,7 +35,7 @@ AFRAME.registerSystem('game', {
   },  // System schema. Parses into `this.data`.
   init: function () {
 
-    this.data.debug = true;
+    this.data.debug = false;
 
     if(this.data.debug == true) {
       document.querySelector('#debug-console').className = 'visible';
