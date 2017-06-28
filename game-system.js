@@ -43,7 +43,6 @@ AFRAME.registerSystem('game', {
   },
   setDistance: function(distance) {
     this.data.distance = -distance;
-    // console.log(this.data.distance);
   },
   updateScore: function() {
     this.data.score = this.data.distance;
@@ -77,20 +76,17 @@ AFRAME.registerSystem('game', {
     var timeRemaining = 5;
 
     var intervalId = setInterval(function(){
-      if(timeRemaining == 0) {
+      if(timeRemaining == 1) {
         document.querySelector('#countdown').setAttribute('text', {align: "center",  value: "5"  });
         clearInterval(intervalId);
+        that.resetGame();
+        that.startGame();
         return;
       }
 
       timeRemaining--;
       document.querySelector('#countdown').setAttribute('text', {align: "center",  value: "" + timeRemaining });
-      },1000);
-
-    setTimeout(function() {
-      that.resetGame();
-      that.startGame();
-    }, 5000);
+    },1000);
   },
   resetGame: function(){
     document.querySelector("#character").setAttribute('position', {x:0,  y:0, z: 0 });
@@ -115,7 +111,7 @@ AFRAME.registerSystem('game', {
 
     // Update the count down every 1 second
     this.data.timerIntervalId = setInterval(function() {
-      // // Time calculations for minutes and seconds
+      // Time calculations for minutes and seconds
       that.data.time++;
       var minutes = Math.floor(that.data.time / 60);
       var seconds = Math.floor(that.data.time % 60);

@@ -6,7 +6,11 @@ AFRAME.registerComponent('tunnel-checkpoint', {
 		}
 	},
 	init: function () {
+		var self = this;
 
+		self.el.addEventListener('collide', function(){
+			self.handleCollision();
+		});
 	},
 	handleCollision: function() {
 		var Game = document.querySelector('a-scene').systems['game'];
@@ -22,7 +26,7 @@ AFRAME.registerComponent('tunnel-checkpoint', {
 			
 			if(Game.data.level > 1) {
 				var oldLevel = document.querySelectorAll('[mixin=level]')[Game.data.level - 1];
-				// document.querySelector('[levels-container]').components['levels-container'].removeLevel(oldLevel);
+				oldLevel.remove();
 			}
 		}
 	},

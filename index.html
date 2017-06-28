@@ -7,7 +7,8 @@
     <!-- using master version to avoid some bugs in 0.5.0 -->
     <script src="https://rawgit.com/aframevr/aframe/88ab1e0/dist/aframe-master.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.8.4/dist/aframe-extras.min.js"></script>
-    <script src="https://cdn.rawgit.com/ngokevin/aframe-physics-components/master/dist/aframe-physics-components.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v1.4.1/dist/aframe-physics-system.min.js"></script>
+
 
     <script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
 
@@ -15,11 +16,11 @@
     <link rel="stylesheet" href="./style.css" />
 
     <script src="game-system.js"></script>
+    <script src="player.js"></script>
     <script src="levels-container.js"></script>
     <script src="level.js"></script>
     <script src="shark.js"></script>
     <script src="tunnel.js"></script>
-    <script src="listener.js"></script>
     <script src="tunnel-checkpoint.js"></script>
     <script src="button.js"></script>
   </head>
@@ -30,7 +31,7 @@
     </div> -->
 
     <!-- Fog for dimming objects in distance -->
-    <a-scene debug physics="gravity: 0;" canvas fog="type: linear; color: #40a4df; far: 1000; near: 0;">
+    <a-scene physics="gravity: 0;" canvas fog="type: linear; color: #40a4df; far: 500; near: 0;">
       <a-assets>
         <!-- models -->
         <a-asset-item id="shark-model" src="/_assets/sharky.json"></a-asset-item>
@@ -41,9 +42,9 @@
         <img id="shark-teeth" src="/_assets/shark-teeth.png" />
 
         <!-- mixins -->
-        <a-mixin id="tunnel" static-body geometry="primitive: cylinder; height: 6000; radius: 100; open-ended: true" position="0 0 -3000" rotation="-90 0 0" material="src: #tunnel-image; side: back; opacity: 1;" tunnel></a-mixin>
+        <a-mixin id="tunnel" static-body="shape: cylinder" geometry="primitive: cylinder; radius: 100; open-ended: true;" rotation="-90 0 0" material="src: #tunnel-image; side: double;" tunnel></a-mixin>
         <a-mixin id="level" class="level" level></a-mixin>
-        <a-mixin id="shark" class="shark" scale="5 5 5" rotation="0 0 0" animation-mixer="clip: swim;" json-model="src: #shark-model;" material="transparent: true; opacity: 0; side: none;" shark geometry="primitive: box; depth: 11; width: 6.4; height: 3.6;" static-body visible="false"></a-mixin>
+        <a-mixin id="shark" class="shark" scale="5 5 5" rotation="0 0 0" animation-mixer="clip: swim;" json-model="src: #shark-model;" material="transparent: false; side: none;" shark geometry="primitive: box; depth: 11; width: 6.4; height: 3.6;" static-body visible="false"></a-mixin>
         <!-- end mixins -->
 
 
@@ -59,11 +60,10 @@
         <a-entity
           id="character"
           position="0 0 0"
-          kinematic-body listener="target: #character"
+          kinematic-body player
           camera
           universal-controls="movementControls: hmd;"
-          sound="src: #river-music"
-        >
+          sound="src: #river-music">
 
           <!--Cursor-->
           <a-entity id="cursor"

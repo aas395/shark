@@ -6,7 +6,8 @@ AFRAME.registerComponent('level', {
 	    },
 	    levelLength: {
 	      type : "number",
-	      default : 1500
+	      // default : 1500
+	      default : 500
 	    },
 	    levelEnd: {
 	      type : "number",
@@ -33,10 +34,11 @@ AFRAME.registerComponent('level', {
 		this.data.levelStart = Game.data.level > 0 ? prevLevel.components.level.data.levelEnd : 0;
 		this.data.levelLength = Game.data.level ? this.data.levelLength * (Game.data.level * 1.2) : this.data.levelLength;
 		this.data.levelEnd = this.data.levelStart + this.data.levelLength;
-
+		
 		var bufferDistance = Game.data.level == 0 ? 250 : 0;
 
 		this.addTunnel();
+		this.addLevelCheckpoints();
 		this.addObstacles({ bufferDistance:  bufferDistance });
 	},
 	addTunnel: function() {
@@ -46,8 +48,7 @@ AFRAME.registerComponent('level', {
 		tunnel.setAttribute('mixin', 'tunnel');
 		tunnel.setAttribute('geometry', {
 			height: levelLength,
-			radius: this.data.tunnelRadius,
-			openEnded: true
+			radius: this.data.tunnelRadius
 		});
 
 		tunnel.setAttribute('position', {
@@ -57,7 +58,6 @@ AFRAME.registerComponent('level', {
 		});
 
 		this.el.appendChild(tunnel);
-		this.addLevelCheckpoints();
 	},
 	addLevelCheckpoints: function() {
 		//level start
@@ -139,13 +139,37 @@ AFRAME.registerComponent('level', {
 
 			obstaclesContainer.appendChild(shark);
 		}
-
+		obstaclesContainer.setAttribute('obstacles-container', '');
 		this.el.appendChild(obstaclesContainer);
+		var self = this;
+	},
+	removeObstacles: function() {
+		var children = this.el.childNodes;
+
+		for(var i = 0; i < children.length; i++) {
+			var child = children[i];
+
+			if(child.hasAttribute('obstacles-container')) {
+				var obstacles = children[i].childNodes;
+				
+				for(var j = 0; j < obstacles.length; j++) {
+					obstacles[j].pause();
+					child.removeChild(obstacles[j]);
+				}
+
+				break;
+			}
+		}
 	},
 	setLevelStart: function(start) {
     	this.data.levelStart = start;
 	},
 	setLevelEnd: function(end) {
 		this.data.levelEnd = end;
+	},
+	remove: function() {
+		// this.el.pause();
+		// this.removeObstacles();
+		// this.el.parent.removeChild(this.el);
 	}
 });
