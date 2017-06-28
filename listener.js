@@ -18,6 +18,7 @@ AFRAME.registerComponent("listener", {
 
         var xPosition = e.detail.target.position.x;
         var yPosition = e.detail.target.position.y;
+        var zPosition = e.detail.target.position.z;
 
         var xDirectionAdjustment = xPosition > 0 ? -1 : 1;
         var yDirectionAdjustment = yPosition > 0 ? -1 : 1;
@@ -25,14 +26,14 @@ AFRAME.registerComponent("listener", {
         if(Game.data.distance > 0) {
           document.querySelector('#character').setAttribute('position', {
             x: xPosition + (5 * xDirectionAdjustment),
-            y: yPosition + (5 * yDirectionAdjustment)
+            y: yPosition + (5 * yDirectionAdjustment),
+            z: zPosition
           });  
-        }
-        
+        }        
       }
 
-      if (collidedWithEl.hasAttribute('obstacle')) {
-        console.log('Eaten by Shark');
+      if (collidedWithEl.hasAttribute('shark')) {
+        // console.log('Eaten by Shark');
         Game.endGame();
       }
 

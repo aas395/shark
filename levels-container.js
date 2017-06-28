@@ -8,6 +8,8 @@ AFRAME.registerComponent('levels-container', {
     this.el.appendChild(newLevel);
   },
   removeLevel: function(level) {
+  	console.log('removing level');
+  	console.log(level);
   	this.el.removeChild(level);
   }
 });

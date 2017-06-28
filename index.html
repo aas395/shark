@@ -3,16 +3,21 @@
   <head>
     <title>Dodge Sharks</title>
     <meta name="description" content="Dodge Sharks">
-    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+
+    <!-- using master version to avoid some bugs in 0.5.0 -->
+    <script src="https://rawgit.com/aframevr/aframe/88ab1e0/dist/aframe-master.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.8.4/dist/aframe-extras.min.js"></script>
     <script src="https://cdn.rawgit.com/ngokevin/aframe-physics-components/master/dist/aframe-physics-components.min.js"></script>
+
+    <script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
+
 
     <link rel="stylesheet" href="./style.css" />
 
     <script src="game-system.js"></script>
     <script src="levels-container.js"></script>
     <script src="level.js"></script>
-    <script src="obstacle.js"></script>
+    <script src="shark.js"></script>
     <script src="tunnel.js"></script>
     <script src="listener.js"></script>
     <script src="tunnel-checkpoint.js"></script>
@@ -25,12 +30,20 @@
     </div> -->
 
     <!-- Fog for dimming objects in distance -->
-    <a-scene physics="gravity: 0;" canvas fog="type: linear; color: #40a4df; far: 1000; near: 0;">
+    <a-scene debug physics="gravity: 0;" canvas fog="type: linear; color: #40a4df; far: 1000; near: 0;">
       <a-assets>
+        <!-- models -->
+        <a-asset-item id="shark-model" src="/_assets/sharky.json"></a-asset-item>
+
+        <!-- images -->
+        <img id="shark-image" src="/_assets/BaseShark.png" />
+        <img src="https://media.giphy.com/media/JXHhI4o9NCf8k/giphy.gif" id="tunnel-image" crossOrigin="anonymous" />
+        <img id="shark-teeth" src="/_assets/shark-teeth.png" />
+
         <!-- mixins -->
-        <a-mixin id="obstacle" static-body geometry="primitive: box" material="transparent: true; opacity: 0;" obstacle></a-mixin>
-        <a-mixin id="tunnel" static-body geometry="primitive: cylinder; height: 6000; radius: 100; open-ended: true" position="0 0 -3000" rotation="-90 0 0" material="src: url(https://media.giphy.com/media/JXHhI4o9NCf8k/giphy.gif); shader: flat; side: double; opacity: 0.8;" tunnel></a-mixin>
+        <a-mixin id="tunnel" static-body geometry="primitive: cylinder; height: 6000; radius: 100; open-ended: true" position="0 0 -3000" rotation="-90 0 0" material="src: #tunnel-image; side: back; opacity: 1;" tunnel></a-mixin>
         <a-mixin id="level" class="level" level></a-mixin>
+        <a-mixin id="shark" class="shark" scale="5 5 5" rotation="0 0 0" animation-mixer="clip: swim;" json-model="src: #shark-model;" material="transparent: true; opacity: 0; side: none;" shark geometry="primitive: box; depth: 11; width: 6.4; height: 3.6;" static-body visible="false"></a-mixin>
         <!-- end mixins -->
 
 
@@ -75,7 +88,8 @@
                scale="1.5 1.5 1.5"
                position="0 0 0"
                rotation="0 0 180"
-               obj-model="obj: url(https://cdn.glitch.com/9d6d1bf1-758a-4a15-86d4-0608c7d98df9%2Farms4.obj?1498406090710); mtl: url(https://cdn.glitch.com/9d6d1bf1-758a-4a15-86d4-0608c7d98df9%2Farms4.mtl?1498408758877)">
+               obj-model="obj: url(https://cdn.glitch.com/9d6d1bf1-758a-4a15-86d4-0608c7d98df9%2Farms4.obj?1498406090710); mtl: url(https://cdn.glitch.com/9d6d1bf1-758a-4a15-86d4-0608c7d98df9%2Farms4.mtl?1498408758877)"
+               shader="flat">
 
                 <a-animation attribute="rotation"
                 dur="3000"
@@ -91,15 +105,13 @@
         <!-- Intro Box -->
         <a-entity id="intro-modal" ui-modal visible="true" position="0 0 0">
 
-          <!-- opening box back light -->
+          <!-- opening box light -->
           <a-light id="light-opening-box-back" color="#fff" type="point" position="0 0 -7" light="angle:0;color:#6dde62;decay:10;distance:100;intensity:1.5">
           </a-light>
 
           <!-- opening box walls -->
-
-
           <!-- front -->
-          <a-plane width="50" height="50" scale="3.5 3.5 .5" transparent="true" material="src: url(_assets/shark-teeth.png); transparent: true;" position="0 2 -50"></a-plane>
+          <a-plane width="50" height="50" scale="3.5 3.5 .5" transparent="true" material="src: #shark-teeth; transparent: true;" position="0 2 -50"></a-plane>
 
           <!-- back -->
           <a-plane id="opening-box-back" width="5" height="5" material="color: #080808; side: back; shader: flat;" position="0 0 2.5" rotation="0 0 0"></a-plane>          
@@ -114,6 +126,7 @@
             scale="1 1 1"
             material="color: #000; opacity: 1"
             position="0 -.75 -3">
+
             <a-text align="center" text="value: Start;" position="0 .1 0"></a-text>
             
             <a-entity id="status-bar-container" position="0 -.1 .01" material="color: gray;" geometry="primitive: plane; height: .1; width: 1">
@@ -165,13 +178,8 @@
         <!-- default lighting -->
         <a-entity light="type: ambient; color: #BBB"></a-entity>
         <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
-        
+
       </a-entity>
     </a-scene>
-
-
-
-
   </body>
-
 </html>

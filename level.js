@@ -45,7 +45,6 @@ AFRAME.registerComponent('level', {
 
 		tunnel.setAttribute('mixin', 'tunnel');
 		tunnel.setAttribute('geometry', {
-			primitive: 'cylinder',
 			height: levelLength,
 			radius: this.data.tunnelRadius,
 			openEnded: true
@@ -124,25 +123,6 @@ AFRAME.registerComponent('level', {
 		var obstaclesContainer = document.createElement('a-entity');
 
 		for(var i = 0; i < this.data.numObstacles; i++) {
-			var currentObstacle = {};
-
-			var building = document.createElement('a-entity');
-			building.setAttribute('mixin', 'obstacle');
-			var shark = document.createElement('a-entity');
-
-			shark.setAttribute('class', 'shark');
-			shark.setAttribute('scale', '5 5 5');
-			shark.setAttribute('rotation', '0 0 0');
-			shark.setAttribute('animation-mixer', 'clip: swim;');
-			shark.setAttribute('json-model', {src: 'url(https://cdn.rawgit.com/brendanluu/brendanluu.github.io/407d10d6/assets/sharky.json)'});
-
-			building.appendChild(shark);
-
-			var depth = 51;
-			var width = 32;
-			var height = 18;
-
-			currentObstacle.geometry = "depth:" + depth + "; width:" + width + "; height: " + height + ";";
 
 			var signOfX = Math.random() >= 0.5 ? -1 : 1;
 			var positionX = Math.floor(Math.random() * 50) * signOfX;
@@ -152,15 +132,12 @@ AFRAME.registerComponent('level', {
 
 			var positionZ = -this.data.levelStart -bufferDistance + -Math.floor(Math.random() * (this.data.levelEnd - bufferDistance));
 
-			currentObstacle.position = positionX + " " + positionY + " " + positionZ;
+			var shark = document.createElement('a-entity');
 
-			for(var key in currentObstacle) {
-				var newAttribute = document.createAttribute(key);
-				newAttribute.value = currentObstacle[key];
-				building.setAttributeNode(newAttribute);
-			}
+			shark.setAttribute('position', {x: positionX, y: positionY, z: positionZ});
+			shark.setAttribute('mixin', 'shark');
 
-			obstaclesContainer.appendChild(building);
+			obstaclesContainer.appendChild(shark);
 		}
 
 		this.el.appendChild(obstaclesContainer);
