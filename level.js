@@ -37,80 +37,8 @@ AFRAME.registerComponent('level', {
 		
 		var bufferDistance = Game.data.level == 0 ? 250 : 0;
 
-		this.addTunnel();
-		this.addLevelCheckpoints();
+		document.querySelector('a-scene').systems['tunnel'].add();
 		this.addObstacles({ bufferDistance:  bufferDistance });
-	},
-	addTunnel: function() {
-		var levelLength = this.data.levelLength;
-		var tunnel = document.createElement('a-entity');
-
-		tunnel.setAttribute('mixin', 'tunnel');
-		tunnel.setAttribute('geometry', {
-			height: levelLength,
-			radius: this.data.tunnelRadius
-		});
-
-		tunnel.setAttribute('position', {
-			x: 0,
-			y: 0,
-			z: -this.data.levelStart - (levelLength / 2)
-		});
-
-		this.el.appendChild(tunnel);
-	},
-	addLevelCheckpoints: function() {
-		//level start
-		//increments level number and speed
-		var levelStartPlane = document.createElement('a-plane');
-		levelStartPlane.setAttribute('position', {
-			x: 0,
-			y: 0,
-			z: -this.data.levelStart
-		});
-
-		levelStartPlane.setAttribute('height', this.data.tunnelRadius * 2);
-		levelStartPlane.setAttribute('width', this.data.tunnelRadius * 2);
-		levelStartPlane.setAttribute('static-body', '');
-		levelStartPlane.setAttribute('material', {opacity: 0});
-		levelStartPlane.setAttribute('tunnel-checkpoint', 'type: start');
-		
-		this.el.appendChild(levelStartPlane);
-
-		//level 1/4
-		//removes previous level and objects
-		var levelOneQuarterPlane = document.createElement('a-plane');
-		levelOneQuarterPlane.setAttribute('position', {
-			x: 0,
-			y: 0,
-			z: -this.data.levelStart -Math.floor(this.data.levelLength * .25)
-		});
-
-		levelOneQuarterPlane.setAttribute('height', this.data.tunnelRadius * 2);
-		levelOneQuarterPlane.setAttribute('width', this.data.tunnelRadius * 2);
-		levelOneQuarterPlane.setAttribute('static-body', '');
-		levelOneQuarterPlane.setAttribute('material', {opacity: 0});
-		levelOneQuarterPlane.setAttribute('tunnel-checkpoint', 'type: one-quarter');
-		
-		this.el.appendChild(levelOneQuarterPlane);
-
-
-		//level 3/4
-		//loads next level and objects
-		var levelThreeQuarterPlane = document.createElement('a-plane');
-		levelThreeQuarterPlane.setAttribute('position', {
-			x: 0,
-			y: 0,
-			z: -this.data.levelStart -Math.floor(this.data.levelLength * .75)
-		});
-
-		levelThreeQuarterPlane.setAttribute('height', this.data.tunnelRadius * 2);
-		levelThreeQuarterPlane.setAttribute('width', this.data.tunnelRadius * 2);
-		levelThreeQuarterPlane.setAttribute('static-body', '');
-		levelThreeQuarterPlane.setAttribute('material', {opacity: 0});
-		levelThreeQuarterPlane.setAttribute('tunnel-checkpoint', 'type: three-quarter');
-		
-		this.el.appendChild(levelThreeQuarterPlane);
 	},
 	addObstacles: function(params) {
 

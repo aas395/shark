@@ -16,12 +16,11 @@
     <link rel="stylesheet" href="./style.css" />
 
     <script src="game-system.js"></script>
+    <script src="tunnel-system.js"></script>
     <script src="player.js"></script>
-    <script src="levels-container.js"></script>
     <script src="level.js"></script>
     <script src="shark.js"></script>
     <script src="tunnel.js"></script>
-    <script src="tunnel-checkpoint.js"></script>
     <script src="button.js"></script>
   </head>
   <body>
@@ -42,8 +41,7 @@
         <img id="shark-teeth" src="/_assets/shark-teeth.png" />
 
         <!-- mixins -->
-        <a-mixin id="tunnel" static-body="shape: cylinder" geometry="primitive: cylinder; radius: 100; open-ended: true;" rotation="-90 0 0" material="src: #tunnel-image; side: double;" tunnel></a-mixin>
-        <a-mixin id="level" class="level" level></a-mixin>
+        <a-mixin id="tunnel" static-body geometry="primitive: cylinder; open-ended: true;" rotation="-90 0 0" material="src: #tunnel-image; side: back;" tunnel></a-mixin>
         <a-mixin id="shark" class="shark" scale="5 5 5" rotation="0 0 0" animation-mixer="clip: swim;" json-model="src: #shark-model;" material="transparent: false; side: none;" shark geometry="primitive: box; depth: 11; width: 6.4; height: 3.6;" static-body visible="false"></a-mixin>
         <!-- end mixins -->
 
@@ -54,12 +52,12 @@
       </a-assets>
 
       <a-entity game>
-        <a-entity levels-container></a-entity>
+        <a-entity id="level-container" level></a-entity>
 
         <!-- Camera -->
         <a-entity
           id="character"
-          position="0 0 0"
+          position="0 0 -10"
           kinematic-body player
           camera
           universal-controls="movementControls: hmd;"
@@ -103,7 +101,7 @@
 
 
         <!-- Intro Box -->
-        <a-entity id="intro-modal" ui-modal visible="true" position="0 0 0">
+        <a-entity id="intro-modal" ui-modal visible="true" position="0 0 -10">
 
           <!-- opening box light -->
           <a-light id="light-opening-box-back" color="#fff" type="point" position="0 0 -7" light="angle:0;color:#6dde62;decay:10;distance:100;intensity:1.5">

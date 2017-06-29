@@ -4,16 +4,16 @@ AFRAME.registerComponent("player", {
       var Game = document.querySelector('a-scene').systems['game'];
 
       if(Game.data.hasStarted) {
-        var targetPosition = this.el.getAttribute('position');
+        var playerPosition = this.el.getAttribute('position');
         const direction = this.el.components.camera.camera.getWorldDirection();
         var forwardMotionCoefficient = Game.data.forwardMotionCoefficient;
 
-        Game.setDistance(targetPosition.z);
+        Game.setDistance(playerPosition.z);
 
         var currentPosition = {
-          x: targetPosition.x + direction.x,
-          y: targetPosition.y + direction.y,
-          z: targetPosition.z + -forwardMotionCoefficient
+          x: playerPosition.x + direction.x,
+          y: playerPosition.y + direction.y,
+          z: playerPosition.z
         };
 
         this.el.setAttribute('position', currentPosition);

@@ -89,7 +89,8 @@ AFRAME.registerSystem('game', {
     },1000);
   },
   resetGame: function(){
-    document.querySelector("#character").setAttribute('position', {x:0,  y:0, z: 0 });
+    var playerPosition = document.querySelector("#character").getAttribute('position');
+    document.querySelector("#character").setAttribute('position', {x:0,  y:0, z: playerPosition.z});
 
     this.data.score = 0;
     this.data.time = 0;

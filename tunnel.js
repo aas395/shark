@@ -8,7 +8,7 @@ AFRAME.registerComponent('tunnel', {
 		});
 
 		self.el.addEventListener('collide', function() {
-			console.log('collided with wall');
+			// console.log('collided with wall');
 			var Game = document.querySelector('a-scene').systems['game'];
 			var player = document.querySelector('#character');
 
@@ -28,6 +28,5 @@ AFRAME.registerComponent('tunnel', {
 	          });  
 	        }      
 		});
-	},
-	multiple: true
+	}
 });
