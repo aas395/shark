@@ -37,7 +37,7 @@
 
         <!-- images -->
         <img id="shark-image" src="/_assets/BaseShark.png" />
-        <img src="https://media.giphy.com/media/JXHhI4o9NCf8k/giphy.gif" id="tunnel-image" crossOrigin="anonymous" />
+        <img src="https://media.giphy.com/media/JXHhI4o9NCf8k/giphy.gif" id="tunnel-image" crossorigin="anonymous" />
         <img id="shark-teeth" src="/_assets/shark-teeth.png" />
 
         <!-- mixins -->
@@ -46,7 +46,7 @@
 
 
         <!-- audio -->
-        <audio id="river-music" src="https://cdn.glitch.com/f6776a32-7c26-4f5c-9cfd-dfedc35a5ea3%2Fshark-final.mp3?1498407744096" preload="auto" autoplay="true" loop="true"></audio>
+        <audio id="river-music" src="https://cdn.glitch.com/f6776a32-7c26-4f5c-9cfd-dfedc35a5ea3%2Fshark-final.mp3?1498407744096" preload="auto" autoplay="true" loop="true" crossorigin="anonymous"></audio>
         <!-- end audio -->
       </a-assets>
 
@@ -54,8 +54,8 @@
         <a-entity id="level-container">
           <a-entity id="obstacles-container"></a-entity>
 
-          <a-entity id="tunnel" static-body geometry="primitive: cylinder; open-ended: false; radius: 80; height: 3500;" rotation="-90 0 0" material="src: #tunnel-image; side: back;" position="0 0 0" tunnel>
-            <a-entity id="tunnel-liner" static-body geometry="primitive: cylinder; open-ended: false; radius: 75; height: 3500;" rotation="0 0 0" material="side: none; transparent:true; opacity: 0;" visible="false" position="0 0 0" tunnel></a-entity>
+          <a-entity id="tunnel" static-body geometry="primitive: cylinder; open-ended: false; radius: 80; height: 3500;" rotation="-90 0 0" material="shader: gif; src: #tunnel-image; side: back;" position="0 0 0" tunnel>
+            <a-entity id="tunnel-liner" static-body geometry="primitive: cylinder; open-ended: false; radius: 75; height: 3500;" rotation="0 0 0" material="side: none; transparent:true; opacity: 0;" position="0 0 0" tunnel></a-entity>
            </a-entity>
 
         </a-entity>
