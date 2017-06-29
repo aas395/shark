@@ -6,17 +6,17 @@ AFRAME.registerComponent('cursor-listener', {
 	},
 	init: function () {
 		var Game = document.querySelector('a-scene').systems['game'];
-		var that = this;
+		var self = this;
 
-		this.el.addEventListener('mouseenter', function (evt) {
+		self.el.addEventListener('mouseenter', function (evt) {
 			document.querySelector('#status-bar-progress').emit('button-mouseover');
 		});
 
-		this.el.addEventListener('mouseleave', function (evt) {
+		self.el.addEventListener('mouseleave', function (evt) {
 			document.querySelector('#status-bar-progress').emit('button-mouseout');
 		});
 
-		this.el.addEventListener('click', function (evt) {
+		self.el.addEventListener('click', function (evt) {
 			Game.startGame();
 		});
 	}

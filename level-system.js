@@ -14,7 +14,8 @@ AFRAME.registerSystem('level', {
       {
         start: 0,
         length: 1500,
-        end: 1500
+        end: 1500,
+        sharkSpeed: 1
       }
     ];
   },
@@ -34,9 +35,10 @@ AFRAME.registerSystem('level', {
       var positionY = Math.floor(Math.random() * 50) * signOfY;
 
       var positionZ = -this.data.bufferDistance - Math.floor(Math.random() * (Tunnel.data.length - this.data.bufferDistance));
-      shark.setAttribute('position', {x: positionX, y: positionY, z: positionZ});
       
+      shark.setAttribute('position', {x: positionX, y: positionY, z: positionZ});
       shark.setAttribute('mixin', 'shark');
+
       obstaclesContainer.appendChild(shark);
     }
   }

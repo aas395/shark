@@ -27,13 +27,10 @@ AFRAME.registerSystem('game', {
     level: {
       type : "number",
       default : 0
-    },
-    timerIntervalId: {
-      type: "number",
-      default: 0
     }
   },  // System schema. Parses into `this.data`.
   init: function () {
+    this.timerIntervalId;
     // this.el.appendChild('<a-entity physics-body="static-body" mixin="build" geometry="depth: 150; width: 150; height: 140;" position="110 69 1500" material="src: url(https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272)"></a-entity>')
   },
   tick: function() {
@@ -55,6 +52,12 @@ AFRAME.registerSystem('game', {
     this.startTimer();
     this.data.hasStarted = true;
 
+    var sharks = document.querySelectorAll('a-entity[shark]');
+    console.log(sharks);
+    for(var i = 0; i < sharks.length; i++) {
+      sharks[i].components['shark'].updateSpeed(1); //starts shark movement
+    }
+
     document.querySelector("#intro-modal").setAttribute('visible', false);
     document.querySelector("#cursor").setAttribute('visible', false);
   },
@@ -69,7 +72,7 @@ AFRAME.registerSystem('game', {
 
     endModal.setAttribute('visible', true);
 
-    clearInterval(this.data.timerIntervalId);
+    clearInterval(this.timerIntervalId);
 
     var timeRemaining = 5;
 
@@ -84,7 +87,7 @@ AFRAME.registerSystem('game', {
 
       timeRemaining--;
       document.querySelector('#countdown').setAttribute('text', {align: "center",  value: "" + timeRemaining });
-    },1000);
+    }, 1000);
   },
   resetGame: function(){
     var playerPosition = document.querySelector("#character").getAttribute('position');
@@ -94,32 +97,22 @@ AFRAME.registerSystem('game', {
     this.data.time = 0;
     this.data.currentLevel = 1;
     this.data.forwardMotionCoefficient = 2;
-    
-    // this.updateTimer(0,0);
 
     var endModal = document.querySelector("#end-modal");
     endModal.setAttribute('visible', false);
   },
-  updateTimer: function(minutes, seconds) {
-    // document.getElementById("time").setAttribute('text', 'value: ' + minutes + "m " + seconds + "s ;");
-  },
   startTimer: function() {
-    var that = this;
+    var self = this;
     //Using the date/time is the only thing I could think to use as a timer
-    // Gets the initial time
-    var initialTime = new Date().getTime();
 
     // Update the count down every 1 second
-    this.data.timerIntervalId = setInterval(function() {
-      // Time calculations for minutes and seconds
-      that.data.time++;
-      var minutes = Math.floor(that.data.time / 60);
-      var seconds = Math.floor(that.data.time % 60);
+    self.timerIntervalId = setInterval(function() {
+      self.data.time++;
+      // var minutes = Math.floor(that.data.time / 60);
+      // var seconds = Math.floor(that.data.time % 60);
 
       // Display the result in the element with id="demo"
       // that.updateTimer(minutes, seconds);
     }, 1000);
-
-    //End of Timer Script
   }
 });
