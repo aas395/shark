@@ -68,13 +68,13 @@ AFRAME.registerSystem('shark', {
   },
   getRandomXCoordinate: function() {
     var signOfX = Math.random() >= 0.5 ? -1 : 1;
-    var positionX = Math.floor(Math.random() * 50) * signOfX;
+    var positionX = Math.floor(Math.random() * 45) * signOfX;
 
     return positionX;
   },
   getRandomYCoordinate: function() {
     var signOfY = Math.random() >= 0.5 ? -1 : 1;
-    var positionY = Math.floor(Math.random() * 50) * signOfY;
+    var positionY = Math.floor(Math.random() * 45) * signOfY;
     
     return positionY;
   },

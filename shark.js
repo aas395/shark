@@ -23,11 +23,6 @@ AFRAME.registerComponent('shark', {
 			Game.endGame();
 		});
 
-		// self.el.addEventListener('schemachanged', function(e) {
-		// 	console.log("schema changed");
-		// 	console.log(e);
-		// });
-
 		this.sharkSpeed = 1;
 
 		this.lastPosition = {x: 0, y: 0, z: 0};
@@ -48,18 +43,32 @@ AFRAME.registerComponent('shark', {
 				y: currentPosition.y,
 				z: currentPosition.z + this.sharkSpeed
 			}
-			if(this.lastPosition.z == newPosition.z) {
-				console.log(currentPosition);
-				console.log(this.data.forwardMotionRate);
-				console.log(newPosition);
-				throw 'problem';
-			}
+			// if(this.lastPosition.z == newPosition.z) {
+			// 	console.log(currentPosition);
+			// 	console.log(this.data.forwardMotionRate);
+			// 	console.log(newPosition);
+			// 	throw 'problem';
+			// }
 			if(currentPosition.z >= 0) {
 				var tunnel = document.querySelector('#tunnel');
 				newPosition = {
 					x: this.system.getRandomYCoordinate(),
 					y: this.system.getRandomXCoordinate(),
 					z: -tunnel.components['geometry'].data.height
+				}
+
+				var randomNumber = Math.floor(Math.random() * 10);
+
+				//1/10 times, send a shark right at the player
+				if(randomNumber == 5) {
+					var player = document.querySelector('#character');
+					var playerPosition = player.getAttribute('position');
+
+					newPosition = {
+						x: playerPosition.x,
+						y: playerPosition.y,
+						z: -tunnel.components['geometry'].data.height
+					}
 				}
 			}
 

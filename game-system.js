@@ -44,19 +44,19 @@ AFRAME.registerSystem('game', {
           sharkSpeed: 2.25
         },
         {
-          end: 2750,
+          end: 3796.5,
           sharkSpeed: 3.25
         },
         {
-          end: 4125,
+          end: 5694,
           sharkSpeed: 4.25
         },
         {
-          end: 6187.5,
+          end: 8541,
           sharkSpeed: 6.25
         },
         {
-          end: 9281.25,
+          end: 12811.5,
           sharkSpeed: 9.5
         }
       ]
@@ -80,11 +80,10 @@ AFRAME.registerSystem('game', {
       this.updateScore();
     }
 
-    if(this.data.levelSettings[this.data.level] != 'undefined' 
+    if(typeof this.data.levelSettings[this.data.level] != 'undefined' 
       && this.data.distance > this.data.levelSettings[this.data.level].end) {
       this.incrementLevel();
     }
-
   },
   incrementLevel: function() {
     this.data.level++;
