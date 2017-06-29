@@ -8,7 +8,6 @@ AFRAME.registerComponent('shark', {
 	init: function () {
 		var self = this;
 		var Game = document.querySelector('a-scene').systems['game'];
-		var Level = document.querySelector('a-scene').systems['level'];
 
 		self.el.setAttribute('visible', 'false');
 		
@@ -20,19 +19,56 @@ AFRAME.registerComponent('shark', {
 		});
 
 		self.el.addEventListener('collide', function(e) {
+			// console.log('collision')
 			Game.endGame();
 		});
+
+		// self.el.addEventListener('schemachanged', function(e) {
+		// 	console.log("schema changed");
+		// 	console.log(e);
+		// });
+
+		this.sharkSpeed = 1;
+
+		this.lastPosition = {x: 0, y: 0, z: 0};
 	},
 	updateSpeed(speed) {
-		this.data.forwardMotionRate = speed;
+		// this.data.forwardMotionRate = speed;
+		this.sharkSpeed = speed;
 	},
 	tick: function() {
 		var currentPosition = this.el.getAttribute('position');
-		this.el.setAttribute('position', {
-			x: currentPosition.x,
-			y: currentPosition.y,
-			z: currentPosition.z + this.data.forwardMotionRate
-		});
+		var Game = document.querySelector('a-scene').systems['game'];
+		var newPosition = {x: 0, y: 0, z: 0};
+
+		if(Game.data.hasStarted) {
+
+			newPosition = {
+				x: currentPosition.x,
+				y: currentPosition.y,
+				z: currentPosition.z + this.sharkSpeed
+			}
+			if(this.lastPosition.z == newPosition.z) {
+				console.log(currentPosition);
+				console.log(this.data.forwardMotionRate);
+				console.log(newPosition);
+				throw 'problem';
+			}
+			if(currentPosition.z >= 0) {
+				var tunnel = document.querySelector('#tunnel');
+				newPosition = {
+					x: this.system.getRandomYCoordinate(),
+					y: this.system.getRandomXCoordinate(),
+					z: -tunnel.components['geometry'].data.height
+				}
+			}
+
+			this.el.setAttribute('position', newPosition);
+
+			
+
+			this.lastPosition = newPosition;
+		}
 	},
 	multiple: true
 });

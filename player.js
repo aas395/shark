@@ -6,9 +6,6 @@ AFRAME.registerComponent("player", {
       if(Game.data.hasStarted) {
         var playerPosition = this.el.getAttribute('position');
         const direction = this.el.components.camera.camera.getWorldDirection();
-        var forwardMotionCoefficient = Game.data.forwardMotionCoefficient;
-
-        Game.setDistance(playerPosition.z);
 
         var currentPosition = {
           x: playerPosition.x + direction.x,
