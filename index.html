@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="./style.css" />
 
     <script src="game-system.js"></script>
+    <script src="level-system.js"></script>
     <script src="tunnel-system.js"></script>
     <script src="player.js"></script>
     <script src="level.js"></script>
@@ -52,7 +53,9 @@
       </a-assets>
 
       <a-entity game>
-        <a-entity id="level-container" level></a-entity>
+        <a-entity id="level-container" level>
+          <a-entity id="obstacles-container"></a-entity>
+        </a-entity>
 
         <!-- Camera -->
         <a-entity

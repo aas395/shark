@@ -52,8 +52,6 @@ AFRAME.registerSystem('game', {
   },
   startGame: function() {
     this.resetGame();
-    this.data.forwardMotionCoefficient = 2;
-
     this.startTimer();
     this.data.hasStarted = true;
 
@@ -95,7 +93,8 @@ AFRAME.registerSystem('game', {
     this.data.score = 0;
     this.data.time = 0;
     this.data.currentLevel = 1;
-
+    this.data.forwardMotionCoefficient = 2;
+    
     // this.updateTimer(0,0);
 
     var endModal = document.querySelector("#end-modal");

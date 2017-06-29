@@ -9,7 +9,7 @@ AFRAME.registerSystem('tunnel', {
       default: 100
     }
   },
-  add: function() {
+  initTunnel: function() {
     var tunnel = document.createElement('a-entity');
 
     tunnel.setAttribute('mixin', 'tunnel');
