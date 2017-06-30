@@ -1,7 +1,7 @@
 AFRAME.registerComponent("player", {
   init: function() {
     var self = this;
-    this.XYmultiplier = 1.1;
+    this.XYmultiplier = 2.5;
 
     this.el.addEventListener('loaded', function() {
 
@@ -27,7 +27,7 @@ AFRAME.registerComponent("player", {
             x: xPosition + (5 * xDirectionAdjustment),
             y: yPosition + (5 * yDirectionAdjustment),
             z: zPosition
-          });  
+          });
         }
       }
     });
