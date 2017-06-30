@@ -32,36 +32,36 @@ AFRAME.registerSystem('game', {
       type: 'array',
       default: [
         {
-          end: 750,
+          end: 12,
           sharkSpeed: 1
         },
         {
-          end: 1125,
+          end: 24,
           sharkSpeed: 1.5
         },
         {
-          end: 1687.5,
+          end: 36,
           sharkSpeed: 2.25
         },
         {
-          end: 2531.25,
-          sharkSpeed: 2.25
+          end: 48,
+          sharkSpeed: 3.375
         },
         {
-          end: 3796.5,
-          sharkSpeed: 3.25
+          end: 60,
+          sharkSpeed: 5.06
         },
         {
-          end: 5694,
-          sharkSpeed: 4.25
+          end: 72,
+          sharkSpeed: 7.59
         },
         {
-          end: 8541,
-          sharkSpeed: 6.25
+          end: 84,
+          sharkSpeed: 11.39
         },
         {
-          end: 12811.5,
-          sharkSpeed: 9.5
+          end: 96,
+          sharkSpeed: 17.08
         }
       ]
     }
@@ -76,7 +76,7 @@ AFRAME.registerSystem('game', {
     }
 
     if(typeof this.data.levelSettings[this.data.level] != 'undefined' 
-      && this.data.distance > this.data.levelSettings[this.data.level].end) {
+      && this.data.time > this.data.levelSettings[this.data.level].end) {
       this.incrementLevel();
     }
   },
@@ -90,12 +90,8 @@ AFRAME.registerSystem('game', {
 
     console.log('incrementing level to level ' + this.data.level);
   },
-  setDistance: function(distance) {
-    this.data.distance = distance;
-  },
   updateDistance: function() {
-    // @TODO maybe add compounding with increased speed
-    this.setDistance(this.data.distance + 1 + (this.data.level * .5));
+    this.data.distance = this.data.distance + this.data.levelSettings[this.data.level].sharkSpeed;
   },
   updateScore: function() {
     this.data.score = this.data.distance;
