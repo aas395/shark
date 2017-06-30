@@ -75,7 +75,7 @@ AFRAME.registerSystem('game', {
       this.updateScore();
     }
 
-    if(typeof this.data.levelSettings[this.data.level] != 'undefined' 
+    if(typeof this.data.levelSettings[this.data.level + 1] != 'undefined' 
       && this.data.time > this.data.levelSettings[this.data.level].end) {
       this.incrementLevel();
     }
@@ -84,11 +84,12 @@ AFRAME.registerSystem('game', {
     var scene = document.querySelector('a-scene');
     var self = this;
 
-    //some components and systems may be listening for these events
     this.data.level++;
+
+    //some components and systems may be listening for these events
     scene.emit('gamelevelincrease', {level: this.data.level});
 
-    console.log('incrementing level to level ' + this.data.level);
+    // console.log('incrementing level to level ' + this.data.level);
   },
   updateDistance: function() {
     this.data.distance = this.data.distance + this.data.levelSettings[this.data.level].sharkSpeed;

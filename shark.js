@@ -41,7 +41,6 @@ AFRAME.registerComponent('shark', {
 		});
 
 		self.el.addEventListener('collide', function(e) {
-			// console.log('collision')
 			Game.endGame();
 		});
 
@@ -54,7 +53,9 @@ AFRAME.registerComponent('shark', {
 	    });
 
 	    self.el.sceneEl.addEventListener('gamelevelincrease', function() {
-	      	self.updateSpeed(Game.data.levelSettings[Game.data.level].sharkSpeed);
+	    	if(typeof Game.data.levelSettings[Game.data.level] !== 'undefined') {
+	    		self.updateSpeed(Game.data.levelSettings[Game.data.level].sharkSpeed);	
+	    	}
 	    });
 	},
 	schemaUpdated: function(newData) {
@@ -105,10 +106,10 @@ AFRAME.registerComponent('shark', {
 					var coinFlip = Math.floor(Math.random() * 2);
 
 					if(coinFlip == 0) {
-						console.log('this shark is now a great white');
+						// console.log('this shark is now a great white');
 						this.data.species == 'greatwhite';
 					} else {
-						console.log('this shark is now a hammerhead');
+						// console.log('this shark is now a hammerhead');
 						this.data.species == 'hammerhead';
 					}
 				// }
