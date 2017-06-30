@@ -21,7 +21,7 @@
     <script src="button.js"></script>
     <script src="shark-system.js"></script>
     <script src="game-system.js"></script>
-    
+
   </head>
   <body>
 
@@ -71,7 +71,7 @@
 
           <!--Cursor-->
           <a-entity id="cursor"
-                visible="true"  
+                visible="true"
                 position="0 0 -1"
                 scale= ".1 .1 .1"
                 geometry="primitive: ring; radiusOuter: 0.30;
@@ -82,10 +82,10 @@
 
           <!-- End Modal  -->
           <a-entity id="end-modal" ui-modal visible="false">
-            <a-entity text="align: center; value: GAME OVER;" position="0 0.01 -.05" width="100" height="100" scale="0.1 0.1 0.1"></a-entity>
-            <a-entity text="align: center; value: Restarting;" position="0 0 -.05" width="100" height="100" scale="0.05 0.05 0.05"></a-entity>
-            <a-entity id="countdown" text=" align: center; value: 5;" position="0 -.01 -.05" width="100" height="100" scale="0.2 0.2 0.2"></a-entity>
-            <a-plane width="100" height="100" scale="100 100 100" material="color: tomato; opacity: 0.7;" position="50 50 -0.1"></a-plane>
+            <a-entity text="align: center; value: GAME OVER;" position="0 1 -4.9" width="100" height="100" scale="15 15 15"></a-entity>
+            <a-entity text="align: center; value: Restarting;" position="0 0 -4.9" width="100" height="100" scale="8 8 8"></a-entity>
+            <a-entity id="countdown" text=" align: center; value: 5;" position="0 -1.1 -4.9" width="100" height="100" scale="14 14 14"></a-entity>
+            <a-plane width="100" height="100" scale="100 100 100" material="color: tomato; opacity: 0.7;" position="50 50 -5"></a-plane>
           </a-entity>
 
           <a-entity id="arms"
@@ -118,13 +118,13 @@
           <a-plane width="50" height="50" scale="3.5 3.5 .5" transparent="true" material="src: #shark-teeth; transparent: true;" position="0 2 -50"></a-plane>
 
           <!-- back -->
-          <a-plane id="opening-box-back" width="5" height="5" material="color: #080808; side: back; shader: flat;" position="0 0 2.5" rotation="0 0 0"></a-plane>          
+          <a-plane id="opening-box-back" width="5" height="5" material="color: #080808; side: back; shader: flat;" position="0 0 2.5" rotation="0 0 0"></a-plane>
 
           <!-- walls -->
           <a-entity geometry="primitive: cylinder; height: 5; open-ended: true; radius: 2.5" id="opening-box-walls" height="10" material="color: #000; side: back;" position="0 0 0" rotation="-90 0 0"></a-entity>
 
           <a-text align="center" text="value: DODGE SHARKS;" position="0 0 -3" scale="1.4 1.4 1.4"></a-text>
-          
+
           <a-entity id="start-button"
             geometry="primitive: plane; height: .55; width: 2;"
             scale="1 1 1"
@@ -132,10 +132,10 @@
             position="0 -.75 -3">
 
             <a-text align="center" text="value: Start;" position="0 .1 0"></a-text>
-            
+
             <a-entity id="status-bar-container" position="0 -.1 .01" material="color: gray;" geometry="primitive: plane; height: .1; width: 1">
               <a-entity id="status-bar-progress" position="0 0 .001" material="color: cyan;" geometry="primitive: plane; height: .1; width: 0">
-                <a-animation 
+                <a-animation
                   attribute="geometry.width"
                   dur="1200"
                   easing="ease-in-out"
@@ -145,7 +145,7 @@
                   begin="button-mouseover"
                   end="button-mouseout">
                 </a-animation>
-                <a-animation 
+                <a-animation
                   attribute="geometry.width"
                   dur="0"
                   to="0"
