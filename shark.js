@@ -40,7 +40,7 @@ AFRAME.registerComponent('shark', {
 			}, 0)
 		});
 
-		self.el.addEventListener('collide', function(e) {
+		self.el.addEventListener('collide', function() {
 			Game.endGame();
 		});
 

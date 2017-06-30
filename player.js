@@ -1,7 +1,7 @@
 AFRAME.registerComponent("player", {
   init: function() {
     var self = this;
-    this.XYmultiplier = 1.5;
+    this.XYmultiplier = 2;
     this.playerCanMove = false;
 
     self.el.sceneEl.addEventListener('gamereset', function() {
@@ -67,7 +67,7 @@ AFRAME.registerComponent("player", {
 
       setTimeout(function() {
         self.playerCanMove = true;
-      }, 200);
+      }, 250);
     }
   }
 });
