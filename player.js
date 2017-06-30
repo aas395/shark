@@ -1,7 +1,7 @@
 AFRAME.registerComponent("player", {
   init: function() {
     var self = this;
-    this.XYmultiplier = 2.5;
+    this.XYmultiplier = 2;
 
     self.el.sceneEl.addEventListener('gamereset', function() {
         var playerPosition = self.el.getAttribute('position');
