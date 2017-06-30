@@ -3,12 +3,34 @@ AFRAME.registerComponent('shark', {
 		forwardMotionRate: {
 			type: 'number',
 			default: 0
+		},
+		angularMotionRate: {
+			type: 'number',
+			default: 0
+		},
+		species: {
+			type: 'string',
+			default: 'greatwhite'
 		}
 	},
 	init: function () {
 		var self = this;
 		var Game = document.querySelector('a-scene').systems['game'];
 
+		this.speciesSettings = {
+			'greatwhite' : {
+				forwardMotionRate: 1,
+				angularMotionRate: 0 // these don't move on the x/y axis
+			},
+			'hammerhead': {
+				forwardMotionRate: 1,
+				angularMotionRate: 2
+			}
+		};
+
+		//don't use this.data.forwardMotionRate -- something buggy happens when that's updated frequently
+		this.sharkSpeed = 1;
+		this.lastPosition = {x: 0, y: 0, z: 0};
 		self.el.setAttribute('visible', 'false');
 		
 		//hacky way to prevent the white flashes while spawning new sharks
@@ -23,12 +45,24 @@ AFRAME.registerComponent('shark', {
 			Game.endGame();
 		});
 
-		this.sharkSpeed = 1;
+		self.el.sceneEl.addEventListener('gameend', function() {
+	      self.updateSpeed(Game.data.levelSettings[Game.data.level].sharkSpeed);
+	    });
 
-		this.lastPosition = {x: 0, y: 0, z: 0};
+	    self.el.sceneEl.addEventListener('gamestart', function() {
+			self.updateSpeed(Game.data.levelSettings[Game.data.level].sharkSpeed);
+	    });
+
+	    self.el.sceneEl.addEventListener('gamelevelincrease', function() {
+	      	self.updateSpeed(Game.data.levelSettings[Game.data.level].sharkSpeed);
+	    });
+	},
+	schemaUpdated: function(newData) {
+		if(newData.species != this.data.species) {
+			console.log('species change')
+		}
 	},
 	updateSpeed(speed) {
-		// this.data.forwardMotionRate = speed;
 		this.sharkSpeed = speed;
 	},
 	tick: function() {
@@ -43,12 +77,7 @@ AFRAME.registerComponent('shark', {
 				y: currentPosition.y,
 				z: currentPosition.z + this.sharkSpeed
 			}
-			// if(this.lastPosition.z == newPosition.z) {
-			// 	console.log(currentPosition);
-			// 	console.log(this.data.forwardMotionRate);
-			// 	console.log(newPosition);
-			// 	throw 'problem';
-			// }
+			
 			if(currentPosition.z >= 0) {
 				var tunnel = document.querySelector('#tunnel');
 				newPosition = {
@@ -57,10 +86,10 @@ AFRAME.registerComponent('shark', {
 					z: -tunnel.components['geometry'].data.height
 				}
 
-				var randomNumber = Math.floor(Math.random() * 10);
+				var randomNumber = Math.floor(Math.random() * 4);
 
-				//1/10 times, send a shark right at the player
-				if(randomNumber == 5) {
+				//1/5 times, send a shark right at the player
+				if(randomNumber == 3) {
 					var player = document.querySelector('#character');
 					var playerPosition = player.getAttribute('position');
 
@@ -70,14 +99,25 @@ AFRAME.registerComponent('shark', {
 						z: -tunnel.components['geometry'].data.height
 					}
 				}
+
+				//if level > 1, create hammerheads
+				// if(Game.data.level > 1) {
+					var coinFlip = Math.floor(Math.random() * 2);
+
+					if(coinFlip == 0) {
+						console.log('this shark is now a great white');
+						this.data.species == 'greatwhite';
+					} else {
+						console.log('this shark is now a hammerhead');
+						this.data.species == 'hammerhead';
+					}
+				// }
+
 			}
 
 			this.el.setAttribute('position', newPosition);
 
-			
-
 			this.lastPosition = newPosition;
 		}
-	},
-	multiple: true
+	}
 });

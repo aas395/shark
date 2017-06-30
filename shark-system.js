@@ -13,14 +13,16 @@ AFRAME.registerSystem('shark', {
       default: 100
     }
   },
-  updateSharkSpeed: function() {
-    var sharks = document.querySelectorAll('a-entity[shark]');
-    var Game = document.querySelector('a-scene').systems['game'];
+  init: function() {
+    var scene = document.querySelector('a-scene');
+    var self = this;
 
-    sharks.forEach(function(shark) {
-      if(typeof Game.data.levelSettings[Game.data.level] != 'undefined') {
-        shark.components['shark'].updateSpeed(Game.data.levelSettings[Game.data.level].sharkSpeed);  
-      }
+    scene.addEventListener('loaded', function() {
+      self.initObstacles();  
+    });
+
+    scene.addEventListener('gamereset', function() {
+      self.resetObstaclePositions();
     });
   },
   initObstacles: function() {
@@ -30,8 +32,6 @@ AFRAME.registerSystem('shark', {
     var maxZ = tunnel.components['geometry'].data.height;
 
     for(var i = 0; i < this.data.numObstacles; i++) {
-      // @TODO
-      // move shark position setting into shark system
       var shark = document.createElement('a-entity');
       
       var sharkPosition = {
@@ -42,9 +42,7 @@ AFRAME.registerSystem('shark', {
 
       shark.setAttribute('position', sharkPosition);
       shark.setAttribute('mixin', 'shark');
-
       obstaclesContainer.appendChild(shark);
-
       lastSharkPosition = sharkPosition;
     }
   },
