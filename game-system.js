@@ -37,31 +37,31 @@ AFRAME.registerSystem('game', {
         },
         {
           end: 24,
-          sharkSpeed: 1.5
+          sharkSpeed: 1.25
         },
         {
           end: 36,
-          sharkSpeed: 2.25
+          sharkSpeed: 1.5625
         },
         {
           end: 48,
-          sharkSpeed: 3.375
+          sharkSpeed: 1.953
         },
         {
           end: 60,
-          sharkSpeed: 5.06
+          sharkSpeed: 2.44
         },
         {
           end: 72,
-          sharkSpeed: 7.59
+          sharkSpeed: 3.05
         },
         {
           end: 84,
-          sharkSpeed: 11.39
+          sharkSpeed: 3.814
         },
         {
           end: 96,
-          sharkSpeed: 17.08
+          sharkSpeed: 4.768
         }
       ]
     }

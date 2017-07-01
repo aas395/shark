@@ -51,7 +51,7 @@ AFRAME.registerComponent("player", {
     var xPosition = playerPosition.x;
     var yPosition = playerPosition.y;
     var zPosition = playerPosition.z;
-    console.log('responding to collision')
+    // console.log('responding to collision')
     if(this.data.playerCanMove) {
       var direction = this.el.components.camera.camera.getWorldDirection();
 
