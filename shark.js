@@ -1,4 +1,5 @@
 AFRAME.registerComponent('shark', {
+	dependencies: ['tunnel'],
 	schema: {
 		forwardMotionRate: {
 			type: 'number',
@@ -6,7 +7,7 @@ AFRAME.registerComponent('shark', {
 		},
 		angularMotionRate: {
 			type: 'number',
-			default: 0
+			default: .25
 		},
 		species: {
 			type: 'string',
@@ -64,14 +65,20 @@ AFRAME.registerComponent('shark', {
 		}
 	},
 	updateSpeed(speed) {
-		this.sharkSpeed = speed;
+		this.sharkSpeed = speed
 	},
 	tick: function() {
-		var currentPosition = this.el.getAttribute('position');
 		var Game = document.querySelector('a-scene').systems['game'];
-		var newPosition = {x: 0, y: 0, z: 0};
 
 		if(Game.data.hasStarted) {
+
+			var currentPosition = this.el.getAttribute('position');
+			var player = document.querySelector('#character');
+			var playerPosition = player.getAttribute('position');
+			var newPosition = {x: 0, y: 0, z: 0};
+			var tunnel = document.querySelector('#tunnel');
+			var tunnelGeometry = tunnel.components['geometry'];
+			var tunnelRadius = tunnelGeometry.data.radius;
 
 			newPosition = {
 				x: currentPosition.x,
@@ -79,42 +86,88 @@ AFRAME.registerComponent('shark', {
 				z: currentPosition.z + this.sharkSpeed
 			}
 			
-			if(currentPosition.z >= 0) {
-				var tunnel = document.querySelector('#tunnel');
+
+
+			// console.log(this.data.species);
+			if(this.data.species == 'hammerhead') {
+				
+				var xPositionDiff = playerPosition.x > currentPosition.x ? playerPosition.x - currentPosition.x : currentPosition.x - playerPosition.x;
+				var yPositionDiff = playerPosition.y > currentPosition.y ? playerPosition.y - currentPosition.y : currentPosition.y - playerPosition.y;
+				var zPositionDiff = playerPosition.z - currentPosition.z;
+
+				var xMovementDirection = playerPosition.x > currentPosition.x ? 1 : -1;
+				var yMovementDirection = playerPosition.y > currentPosition.y ? 1 : -1;
+
+				var xMotionRate = this.data.angularMotionRate;
+				var yMotionRate = this.data.angularMotionRate;
+
+				if(xPositionDiff < 10) {
+					xMotionRate = 0;
+				}
+
+				if(yPositionDiff < 10) {
+					yMotionRate = 0;
+				}
+
+				newPosition = {
+					x: currentPosition.x + (xMotionRate * xMovementDirection) * (this.sharkSpeed * .75),
+					y: currentPosition.y + (yMotionRate * yMovementDirection) * (this.sharkSpeed * .75),
+					z: currentPosition.z + this.sharkSpeed
+				};
+
+				if(zPositionDiff > 100) {
+					//Math... we get the sine of this angle by doing opposite/hypotenuse
+					// then we can multiply that by 180/Math.PI to get degrees
+					var xRotationAngle = (xPositionDiff/zPositionDiff) * (180/Math.PI) * xMovementDirection;
+					var yRotationAngle = (yPositionDiff/zPositionDiff) * (180/Math.PI) * yMovementDirection;
+					// console.log(" ");
+					// console.log('x angle: ' + xRotationAngle);
+					// console.log('y angleL: ' + yRotationAngle);
+					// console.log(" ");
+					this.el.setAttribute('rotation', {x: -yRotationAngle, y: xRotationAngle, z: 0});	
+				}
+				
+				// console.log(currentPosition)
+				// console.log(newPosition)
+				// console.log('')
+			}
+
+
+			if(currentPosition.z >= 100) {
+				var tunnelHeight = tunnelGeometry.data.height;
+
 				newPosition = {
 					x: this.system.getRandomYCoordinate(),
 					y: this.system.getRandomXCoordinate(),
-					z: -tunnel.components['geometry'].data.height
+					z: -tunnelHeight
 				}
 
-				var randomNumber = Math.floor(Math.random() * 4);
+				var randomNumber = Math.floor(Math.random() * 3);
 
 				//1/5 times, send a shark right at the player
-				if(randomNumber == 3) {
-					var player = document.querySelector('#character');
-					var playerPosition = player.getAttribute('position');
-
+				if(randomNumber == 2) {
 					newPosition = {
 						x: playerPosition.x,
 						y: playerPosition.y,
-						z: -tunnel.components['geometry'].data.height
+						z: -tunnelHeight
 					}
 				}
 
 				//if level > 1, create hammerheads
-				// if(Game.data.level > 1) {
+				if(Game.data.level > 2) {
 					var coinFlip = Math.floor(Math.random() * 2);
 
 					if(coinFlip == 0) {
 						// console.log('this shark is now a great white');
-						this.data.species == 'greatwhite';
+						this.data.species = 'greatwhite';
 					} else {
 						// console.log('this shark is now a hammerhead');
-						this.data.species == 'hammerhead';
+						this.data.species = 'hammerhead';
 					}
-				// }
+				}
 
 			}
+
 
 			this.el.setAttribute('position', newPosition);
 

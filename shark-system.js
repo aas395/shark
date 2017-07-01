@@ -6,7 +6,7 @@ AFRAME.registerSystem('shark', {
     },
     numObstacles: {
       type: 'number',
-      default: 20
+      default: 5
     },
     zMargin: {
       type: 'number',

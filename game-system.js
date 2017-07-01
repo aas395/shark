@@ -89,7 +89,7 @@ AFRAME.registerSystem('game', {
     //some components and systems may be listening for these events
     scene.emit('gamelevelincrease', {level: this.data.level});
 
-    // console.log('incrementing level to level ' + this.data.level);
+    console.log('incrementing level to level ' + this.data.level);
   },
   updateDistance: function() {
     this.data.distance = this.data.distance + this.data.levelSettings[this.data.level].sharkSpeed;

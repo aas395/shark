@@ -1,8 +1,13 @@
 AFRAME.registerComponent("player", {
+  schema: {
+    playerCanMove: {
+      type: 'boolean',
+      default: false
+    }
+  },
   init: function() {
     var self = this;
     this.XYmultiplier = 2;
-    this.playerCanMove = false;
 
     self.el.sceneEl.addEventListener('gamereset', function() {
         var playerPosition = self.el.getAttribute('position');
@@ -10,21 +15,22 @@ AFRAME.registerComponent("player", {
     });
 
     self.el.sceneEl.addEventListener('gamestart', function() {
-        self.playerCanMove = true;
+        self.data.playerCanMove = true;
     });
 
     self.el.sceneEl.addEventListener('gameend', function() {
-        self.playerCanMove = false;
+        self.data.playerCanMove = false;
+        console.log('game ended')
     });
 
-    self.el.addEventListener('collide', function(e) {
-      if(e.detail.body.el.hasAttribute('tunnel')) {
+    self.el.sceneEl.addEventListener('collide', function(e) {
+      if(self.data.playerCanMove && e.target.hasAttribute('tunnel')) {
         self.handleWallCollision();
       }
     });
   },
   tick : function() {
-      if(this.playerCanMove) {
+      if(this.data.playerCanMove) {
         var playerPosition = this.el.getAttribute('position');
         var direction = this.el.components.camera.camera.getWorldDirection();
 
@@ -39,16 +45,14 @@ AFRAME.registerComponent("player", {
   },
   handleWallCollision: function() {
     var Game = document.querySelector('a-scene').systems['game'];
-
-    if(Game.data.hasStarted) {
-      // console.log('collision');
-      var self = this;
-      var player = this.el;
-      var playerPosition = player.getAttribute('position');
-      var xPosition = playerPosition.x;
-      var yPosition = playerPosition.y;
-      var zPosition = playerPosition.z;
-
+    var self = this;
+    var player = this.el;
+    var playerPosition = player.getAttribute('position');
+    var xPosition = playerPosition.x;
+    var yPosition = playerPosition.y;
+    var zPosition = playerPosition.z;
+    console.log('responding to collision')
+    if(this.data.playerCanMove) {
       var direction = this.el.components.camera.camera.getWorldDirection();
 
       var xDirectionAdjustmentSign = xPosition * direction.x > 0 ? -1 : 1;
@@ -57,7 +61,7 @@ AFRAME.registerComponent("player", {
       var xDirectionAdjustment = self.XYmultiplier * xDirectionAdjustmentSign * direction.x * 20;
       var yDirectionAdjustment = self.XYmultiplier * yDirectionAdjustmentSign * direction.y * 20;
     
-      this.playerCanMove = false;
+      this.data.playerCanMove = false;
 
       self.el.setAttribute('position', {
         x: xPosition + xDirectionAdjustment,
@@ -66,8 +70,15 @@ AFRAME.registerComponent("player", {
       });
 
       setTimeout(function() {
-        self.playerCanMove = true;
+        self.data.playerCanMove = true;
       }, 250);
+    } else if(Game.data.time > 1) {
+      // console.log(self.el.getAttribute('position'));
+      self.el.setAttribute('position', {
+        x: xPosition,
+        y: yPosition,
+        z: zPosition
+      });
     }
   }
 });
