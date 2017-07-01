@@ -33,35 +33,35 @@ AFRAME.registerSystem('game', {
       default: [
         {
           end: 12,
-          sharkSpeed: 1
+          sharkSpeed: 1.5
         },
         {
           end: 24,
-          sharkSpeed: 1.25
+          sharkSpeed: 1.75
         },
         {
           end: 36,
-          sharkSpeed: 1.5625
+          sharkSpeed: 2.00
         },
         {
           end: 48,
-          sharkSpeed: 1.953
+          sharkSpeed: 2.5
         },
         {
           end: 60,
-          sharkSpeed: 2.44
+          sharkSpeed: 3
         },
         {
           end: 72,
-          sharkSpeed: 3.05
+          sharkSpeed: 3.5
         },
         {
           end: 84,
-          sharkSpeed: 3.814
+          sharkSpeed: 4.0
         },
         {
           end: 96,
-          sharkSpeed: 4.768
+          sharkSpeed: 4.5
         }
       ]
     }
@@ -75,7 +75,7 @@ AFRAME.registerSystem('game', {
       this.updateScore();
     }
 
-    if(typeof this.data.levelSettings[this.data.level + 1] != 'undefined' 
+    if(typeof this.data.levelSettings[this.data.level + 1] != 'undefined'
       && this.data.time > this.data.levelSettings[this.data.level].end) {
       this.incrementLevel();
     }
