@@ -32,35 +32,35 @@ AFRAME.registerSystem('game', {
       type: 'array',
       default: [
         {
-          end: 12,
+          end: 11,
           sharkSpeed: 1.5
         },
         {
-          end: 24,
+          end: 23,
           sharkSpeed: 1.75
         },
         {
-          end: 36,
+          end: 35,
           sharkSpeed: 2.00
         },
         {
-          end: 48,
+          end: 47,
           sharkSpeed: 2.5
         },
         {
-          end: 60,
+          end: 59,
           sharkSpeed: 3
         },
         {
-          end: 72,
+          end: 71,
           sharkSpeed: 3.5
         },
         {
-          end: 84,
+          end: 83,
           sharkSpeed: 4.0
         },
         {
-          end: 96,
+          end: 95,
           sharkSpeed: 4.5
         }
       ]
