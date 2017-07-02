@@ -4,8 +4,6 @@
     <title>Dodge Sharks</title>
     <meta name="description" content="Dodge Sharks">
 
-    <!-- using master version to avoid some bugs in 0.5.0 -->
-    <!-- <script src="https://rawgit.com/aframevr/aframe/88ab1e0/dist/aframe-master.js"></script> -->
     <script src="https://aframe.io/releases/0.6.0/aframe.min.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.8.4/dist/aframe-extras.min.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v1.4.1/dist/aframe-physics-system.min.js"></script>
@@ -51,7 +49,7 @@
 
 
         <!-- audio -->
-        <audio id="river-music" src="https://cdn.glitch.com/f6776a32-7c26-4f5c-9cfd-dfedc35a5ea3%2Fshark-final.mp3?1498407744096" preload="auto" autoplay="true" loop="true" crossorigin="anonymous"></audio>
+        <!-- <audio id="river-music" src="https://cdn.glitch.com/f6776a32-7c26-4f5c-9cfd-dfedc35a5ea3%2Fshark-final.mp3?1498407744096" preload="auto" autoplay="true" loop="true" crossorigin="anonymous"></audio> -->
         <!-- end audio -->
       </a-assets>
 
@@ -115,18 +113,18 @@
         <a-entity id="intro-modal" ui-modal visible="true" position="0 0 -10">
 
           <!-- opening box light -->
-          <a-light id="light-opening-box-back" color="#fff" type="point" position="0 0 -7" light="angle:0;color:#6dde62;decay:10;distance:100;intensity:1.5">
+          <a-light id="light-opening-box-back" type="point" position="0 -2 -4" light="color:#ccc;decay:1;distance:5;intensity:.75">
           </a-light>
 
           <!-- opening box walls -->
           <!-- front -->
-          <a-plane width="50" height="50" scale="3.5 3.5 .5" transparent="true" material="src: #shark-teeth; transparent: true;" position="0 2 -50"></a-plane>
+          <a-plane width="50" height="50" scale="3.5 3.5 .5" transparent="true" material="src: #shark-teeth; transparent: true; shader: flat; color: #000;" position="0 2 -50"></a-plane>
 
           <!-- back -->
-          <a-plane id="opening-box-back" width="5" height="5" material="color: #080808; side: back; shader: flat;" position="0 0 2.5" rotation="0 0 0"></a-plane>          
+          <a-plane id="opening-box-back" width="5" height="5" material="color: #000; side: back; shader: flat; metalness: 1" position="0 0 2.5" rotation="0 0 0"></a-plane>          
 
           <!-- walls -->
-          <a-entity geometry="primitive: cylinder; height: 5; open-ended: true; radius: 2.5" id="opening-box-walls" height="10" material="color: #000; side: back;" position="0 0 0" rotation="-90 0 0"></a-entity>
+          <a-entity geometry="primitive: cylinder; height: 5; open-ended: true; radius: 2.5" id="opening-box-walls" height="10" material="color: #000; side: back; metalness: .1" position="0 0 0" rotation="-90 0 0"></a-entity>
 
           <a-text align="center" text="value: DODGE SHARKS;" position="0 0 -3" scale="1.4 1.4 1.4"></a-text>
           
@@ -186,7 +184,7 @@
 
         <!-- default lighting -->
         <a-entity light="type: ambient; color: #BBB"></a-entity>
-        <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
+        <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0 1 -5"></a-entity>
 
       </a-entity>
     </a-scene>
