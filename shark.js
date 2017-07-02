@@ -7,7 +7,7 @@ AFRAME.registerComponent('shark', {
 		},
 		angularMotionRate: {
 			type: 'number',
-			default: .25
+			default: .2
 		},
 		species: {
 			type: 'string',
@@ -115,15 +115,12 @@ AFRAME.registerComponent('shark', {
 					z: currentPosition.z + this.sharkSpeed
 				};
 
-				if(zPositionDiff > 100) {
+				//turn the sharks towards us if they're within a certain distance
+				if(zPositionDiff > 70) {
 					//Math... we get the sine of this angle by doing opposite/hypotenuse
 					// then we can multiply that by 180/Math.PI to get degrees
 					var xRotationAngle = (xPositionDiff/zPositionDiff) * (180/Math.PI) * xMovementDirection;
 					var yRotationAngle = (yPositionDiff/zPositionDiff) * (180/Math.PI) * yMovementDirection;
-					// console.log(" ");
-					// console.log('x angle: ' + xRotationAngle);
-					// console.log('y angleL: ' + yRotationAngle);
-					// console.log(" ");
 					this.el.setAttribute('rotation', {x: -yRotationAngle, y: xRotationAngle, z: 0});	
 				}
 				
@@ -149,20 +146,20 @@ AFRAME.registerComponent('shark', {
 					newPosition = {
 						x: playerPosition.x,
 						y: playerPosition.y,
-						z: -tunnelHeight
+						z: -tunnelHeight/2
 					}
 				}
 
 				//if level > 1, create hammerheads
 				if(Game.data.level > 2) {
-					var coinFlip = Math.floor(Math.random() * 2);
+					var randomNumberSpecies = Math.floor(Math.random() * 5);
 
-					if(coinFlip == 0) {
+					if(randomNumberSpecies == 0) {
+						this.data.species = 'hammerhead';
+						console.log('now a hammerhead')
+					} else {
 						// console.log('this shark is now a great white');
 						this.data.species = 'greatwhite';
-					} else {
-						// console.log('this shark is now a hammerhead');
-						this.data.species = 'hammerhead';
 					}
 				}
 

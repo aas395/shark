@@ -20,11 +20,11 @@ AFRAME.registerComponent("player", {
 
     self.el.sceneEl.addEventListener('gameend', function() {
         self.data.playerCanMove = false;
-        console.log('game ended')
+        // console.log('game ended')
     });
 
     self.el.sceneEl.addEventListener('collide', function(e) {
-      if(self.data.playerCanMove && e.target.hasAttribute('tunnel')) {
+      if(self.data.playerCanMove && e.target.hasAttribute('tunnel-wall')) {
         self.handleWallCollision();
       }
     });
@@ -70,15 +70,10 @@ AFRAME.registerComponent("player", {
       });
 
       setTimeout(function() {
-        self.data.playerCanMove = true;
-      }, 250);
-    } else if(Game.data.time > 1) {
-      // console.log(self.el.getAttribute('position'));
-      self.el.setAttribute('position', {
-        x: xPosition,
-        y: yPosition,
-        z: zPosition
-      });
+        if(Game.data.hasStarted) {
+          self.data.playerCanMove = true;  
+        }
+      }, 200);
     }
   }
 });

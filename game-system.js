@@ -111,6 +111,7 @@ AFRAME.registerSystem('game', {
     var self = this;
     var scene = document.querySelector('a-scene');
     scene.emit('gameend');
+    clearInterval(self.timerIntervalId);
 
     var timeRemaining = self.data.endModalTimerStart;
     var countdownEl = document.querySelector('#countdown');
@@ -148,6 +149,7 @@ AFRAME.registerSystem('game', {
 
       // Display the result in the element with id="demo"
       // that.updateTimer(minutes, seconds);
+      console.log(self.data.time);
     }, 1000);
   }
 });

@@ -17,6 +17,7 @@
     <script src="game-system.js"></script>
     <script src="player.js"></script>
     <script src="tunnel.js"></script>
+    <script src="tunnel-wall.js"></script>
     <script src="shark.js"></script>
     <script src="button.js"></script>
     <script src="end-modal.js"></script>
@@ -31,7 +32,7 @@
     </div> -->
 
     <!-- Fog for dimming objects in distance -->
-    <a-scene physics="gravity: 0;" canvas fog="type: linear; color: #40a4df; far: 300; near: 0;">
+    <a-scene physics="gravity: 0;" canvas fog="type: linear; color: #40a4df; far: 250; near: 0;">
       <a-assets>
         <!-- models -->
         <a-asset-item id="shark-model" src="/_assets/sharky.json"></a-asset-item>
@@ -57,8 +58,7 @@
         <a-entity id="level-container">
           <a-entity id="obstacles-container"></a-entity>
 
-          <a-entity id="tunnel" static-body geometry="primitive: cylinder; open-ended: false; radius: 80; height: 800;" rotation="-90 0 0" material="shader: gif; src: #tunnel-image; side: back;" position="0 0 0" tunnel>
-            <a-entity id="tunnel-liner" static-body geometry="primitive: cylinder; open-ended: false; radius: 70; height: 800;" rotation="0 0 0" material="side: none; transparent:true; opacity: 0;" position="0 0 0" tunnel></a-entity>
+          <a-entity id="tunnel" static-body geometry="primitive: cylinder; open-ended: false; radius: 80; height: 1000;" rotation="-90 0 0" material="shader: gif; src: #tunnel-image; side: back;" position="0 0 0" tunnel>
           </a-entity>
 
         </a-entity>

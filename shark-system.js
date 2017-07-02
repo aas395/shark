@@ -2,11 +2,11 @@ AFRAME.registerSystem('shark', {
   schema: {
     bufferDistance: {
       type: 'number',
-      default: 200
+      default: 100
     },
     numObstacles: {
       type: 'number',
-      default: 5
+      default: 4
     },
     zMargin: {
       type: 'number',
@@ -29,7 +29,7 @@ AFRAME.registerSystem('shark', {
     var obstaclesContainer = document.querySelector('#obstacles-container');
     var lastSharkPosition = {x: 0, y: 0, z: -this.data.bufferDistance};
     var tunnel = document.querySelector('#tunnel');
-    var maxZ = tunnel.components['geometry'].data.height;
+    var maxZ = this.data.numObstacles * 100 + this.data.bufferDistance;
 
     for(var i = 0; i < this.data.numObstacles; i++) {
       var shark = document.createElement('a-entity');
@@ -77,7 +77,7 @@ AFRAME.registerSystem('shark', {
     return positionY;
   },
   getRandomZCoordinate: function(maxZ, lastSharkZ) {
-    var positionZ = lastSharkZ - this.data.zMargin - Math.floor(Math.random() * 150);
+    var positionZ = lastSharkZ - this.data.zMargin - Math.floor(Math.random() * 100);
     return positionZ;
   }
 });
