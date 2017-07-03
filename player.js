@@ -9,10 +9,12 @@ AFRAME.registerComponent("player", {
     var self = this;
     this.XYmultiplier = 2;
     var Game = this.el.sceneEl.systems['game'];
+    var character = self.el;
 
     self.el.sceneEl.addEventListener('gamereset', function() {
         var playerPosition = self.el.getAttribute('position');
         self.el.setAttribute('position', {x:0,  y:0, z: playerPosition.z});
+        character.components.sound.stopSound();
     });
 
     self.el.sceneEl.addEventListener('gamestart', function() {
