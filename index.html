@@ -23,7 +23,6 @@
     <script src="end-modal.js"></script>
     <script src="shark-system.js"></script>
     
-    
   </head>
   <body>
 
@@ -35,17 +34,19 @@
     <a-scene physics="gravity: 0;" canvas fog="type: linear; color: #40a4df; far: 250; near: 0;">
       <a-assets>
         <!-- models -->
-        <a-asset-item id="shark-model" src="/_assets/sharky.json"></a-asset-item>
+        <a-asset-item id="shark-model1" src="/_assets/sharky.json"></a-asset-item>
+        <a-asset-item id="shark-model2" src="/_assets/sharky2.json"></a-asset-item>
         <!-- end modles -->
 
         <!-- images -->
-        <img id="shark-image" src="/_assets/BaseShark.png" />
+        <img id="shark-image1" src="/_assets/BaseShark.png" />
+        <img id="shark-image2" src="/_assets/BaseShark2.png" />
         <img src="https://media.giphy.com/media/JXHhI4o9NCf8k/giphy.gif" id="tunnel-image" crossorigin="anonymous" />
         <img id="shark-teeth" src="/_assets/shark-teeth.png" />
         <!-- end images -->
 
         <!-- mixins -->
-        <a-mixin id="shark" class="shark" scale="5 5 5" rotation="0 0 0" animation-mixer="clip: swim;" json-model="src: #shark-model;" material="transparent: false; side: none;" shark geometry="primitive: box; depth: 11; width: 6.4; height: 3.6;" static-body visible="false"></a-mixin>
+        <a-mixin id="shark" class="shark" scale="5 5 5" rotation="0 0 0" animation-mixer="clip: swim;" json-model="src: #shark-model1;" material="transparent: false; side: none;" shark geometry="primitive: box; depth: 11; width: 6.4; height: 3.6;" static-body visible="false"></a-mixin>
         <!-- end mixins -->
 
 

@@ -20,11 +20,13 @@ AFRAME.registerComponent('shark', {
 		this.speciesSettings = {
 			'greatwhite' : {
 				forwardMotionRate: 1,
-				angularMotionRate: 0 // these don't move on the x/y axis
+				angularMotionRate: 0,
+				jsonModel: '#shark-model1' // these don't move on the x/y axis
 			},
 			'hammerhead': {
 				forwardMotionRate: 1,
-				angularMotionRate: 2
+				angularMotionRate: 2,
+				jsonModel: '#shark-model2'
 			}
 		};
 
@@ -60,7 +62,7 @@ AFRAME.registerComponent('shark', {
 	},
 	schemaUpdated: function(newData) {
 		if(newData.species != this.data.species) {
-			console.log('species change')
+			console.log('species change');
 		}
 	},
 	updateSpeed(speed) {
@@ -129,7 +131,7 @@ AFRAME.registerComponent('shark', {
 			}
 
 
-			if(currentPosition.z >= 100) {
+			if(currentPosition.z >= 50) {
 				var tunnelHeight = tunnelGeometry.data.height;
 
 				newPosition = {
@@ -150,20 +152,21 @@ AFRAME.registerComponent('shark', {
 				}
 
 				//if level > 1, create hammerheads
-				if(Game.data.level > 2) {
-					var randomNumberSpecies = Math.floor(Math.random() * 5);
+				// if(Game.data.level > 2) {
+					var randomNumberSpecies = Math.floor(Math.random() * 2);
 
 					if(randomNumberSpecies == 0) {
 						this.data.species = 'hammerhead';
+						this.el.setAttribute('json-model', 'src', '#shark-model2');
 						console.log('now a hammerhead')
 					} else {
+						this.el.setAttribute('rotation', '0 0 0');
 						// console.log('this shark is now a great white');
 						this.data.species = 'greatwhite';
 					}
-				}
+				// }
 
 			}
-
 
 			this.el.setAttribute('position', newPosition);
 
