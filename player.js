@@ -8,6 +8,7 @@ AFRAME.registerComponent("player", {
   init: function() {
     var self = this;
     this.XYmultiplier = 2;
+    var Game = this.el.sceneEl.systems['game'];
 
     self.el.sceneEl.addEventListener('gamereset', function() {
         var playerPosition = self.el.getAttribute('position');
@@ -16,6 +17,7 @@ AFRAME.registerComponent("player", {
 
     self.el.sceneEl.addEventListener('gamestart', function() {
         self.data.playerCanMove = true;
+        self.el.components.sound.playSound();
     });
 
     self.el.sceneEl.addEventListener('gameend', function() {
@@ -26,6 +28,20 @@ AFRAME.registerComponent("player", {
     self.el.sceneEl.addEventListener('collide', function(e) {
       if(self.data.playerCanMove && e.target.hasAttribute('tunnel-wall')) {
         self.handleWallCollision();
+      }
+    });
+
+    self.el.sceneEl.addEventListener('gamelevelincrease', function() {
+      if(typeof Game.data.levelSettings[Game.data.level].audioFile != 'undefined') {
+        var audioFile = Game.data.levelSettings[Game.data.level].audioFile;
+        // console.log('updating audio file to ' + audioFile);
+        character.components.sound.stopSound();
+        character.setAttribute('sound', {
+          src: audioFile,
+          loop: true,
+          autoPlay: true
+        });
+        character.components.sound.playSound();
       }
     });
   },

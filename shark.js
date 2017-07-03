@@ -1,5 +1,4 @@
 AFRAME.registerComponent('shark', {
-	dependencies: ['tunnel'],
 	schema: {
 		forwardMotionRate: {
 			type: 'number',

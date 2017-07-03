@@ -37,15 +37,18 @@ AFRAME.registerSystem('game', {
         },
         {
           end: 23,
-          sharkSpeed: 1.75
+          sharkSpeed: 1.75,
+          audioFile: '#shark-track-140'
         },
         {
           end: 35,
-          sharkSpeed: 2.00
+          sharkSpeed: 2.00,
+          audioFile: '#shark-track-160'
         },
         {
           end: 47,
-          sharkSpeed: 2.5
+          sharkSpeed: 2.5,
+          audioFile: '#shark-track-170'
         },
         {
           end: 59,
