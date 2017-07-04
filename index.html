@@ -22,7 +22,6 @@
     <script src="button.js"></script>
     <script src="end-modal.js"></script>
     <script src="shark-system.js"></script>
-    
   </head>
   <body>
 
@@ -46,7 +45,7 @@
         <!-- end images -->
 
         <!-- mixins -->
-        <a-mixin id="shark" class="shark" scale="5 5 5" rotation="0 0 0" animation-mixer="clip: swim;" json-model="src: #shark-model1;" material="transparent: false; side: none;" shark geometry="primitive: box; depth: 11; width: 6.4; height: 3.6;" static-body visible="false"></a-mixin>
+        <a-mixin id="shark" class="shark" scale="5 5 5" rotation="0 0 0" animation-mixer="clip: swim;" json-model="src: #shark-model1;" material="transparent: false; side: none;" shark geometry="primitive: box; depth: 11; width: 6.4; height: 3.6;" static-body visible="false" shadow="cast: true; receive: false;"></a-mixin>
         <!-- end mixins -->
 
 
@@ -63,7 +62,9 @@
         <a-entity id="level-container">
           <a-entity id="obstacles-container"></a-entity>
 
-          <a-entity id="tunnel" static-body geometry="primitive: cylinder; open-ended: false; radius: 80; height: 1000;" rotation="-90 0 0" material="shader: gif; src: #tunnel-image; side: back;" position="0 0 0" tunnel>
+          <a-entity id="tunnel" static-body geometry="primitive: cylinder; open-ended: false; radius: 80; height: 1000;" rotation="-90 0 0" material="shader: gif; src: #tunnel-image; side: back;" position="0 0 0" tunnel shadow="receive: true; cast: false;" shadow-catcher>
+            <a-entity id="tunnel-liner" static-body geometry="primitive: cylinder; open-ended: false; radius: 79.5; height: 1000;" material="side: back; opacity: .1;" shadow="receive: true; cast: false;" >
+            </a-entity>
           </a-entity>
 
         </a-entity>
@@ -190,7 +191,7 @@
 
         <!-- default lighting -->
         <a-entity light="type: ambient; color: #BBB"></a-entity>
-        <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0 1 -5"></a-entity>
+        <a-entity light="type: directional; color: #FFF; intensity: 1; castShadow: true; shadowCameraTop: 300; shadowCameraBottom: -10; shadowCameraLeft: 70; shadowCameraRight: -70;" position="0 50 0"></a-entity>
 
       </a-entity>
     </a-scene>

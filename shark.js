@@ -124,10 +124,6 @@ AFRAME.registerComponent('shark', {
 					var yRotationAngle = (yPositionDiff/zPositionDiff) * (180/Math.PI) * yMovementDirection;
 					this.el.setAttribute('rotation', {x: -yRotationAngle, y: xRotationAngle, z: 0});	
 				}
-				
-				// console.log(currentPosition)
-				// console.log(newPosition)
-				// console.log('')
 			}
 
 
@@ -152,7 +148,7 @@ AFRAME.registerComponent('shark', {
 				}
 
 				//if level > 1, create hammerheads
-				// if(Game.data.level > 2) {
+				if(Game.data.level > 2) {
 					var randomNumberSpecies = Math.floor(Math.random() * 2);
 
 					if(randomNumberSpecies == 0) {
@@ -164,7 +160,7 @@ AFRAME.registerComponent('shark', {
 						// console.log('this shark is now a great white');
 						this.data.species = 'greatwhite';
 					}
-				// }
+				}
 
 			}
 
