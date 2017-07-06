@@ -34,7 +34,7 @@ AFRAME.registerComponent('shark', {
 		this.sharkSpeed = 1;
 		this.lastPosition = {x: 0, y: 0, z: 0};
 		self.el.setAttribute('visible', 'false');
-		
+
 		//hacky way to prevent the white flashes while spawning new sharks
 		self.el.addEventListener('model-loaded', function() {
 			setTimeout(function(){
@@ -42,8 +42,10 @@ AFRAME.registerComponent('shark', {
 			}, 0)
 		});
 
-		self.el.addEventListener('collide', function() {
+		self.el.addEventListener('collide', function(e) {
+			self.el.setAttribute('visible', 'false');
 			Game.endGame();
+			setTimeout(function(){ self.el.setAttribute('visible', 'true'); }, 5000);
 		});
 
 		self.el.sceneEl.addEventListener('gameend', function() {
@@ -165,7 +167,6 @@ AFRAME.registerComponent('shark', {
 			}
 
 			this.el.setAttribute('position', newPosition);
-
 			this.lastPosition = newPosition;
 		}
 	}
