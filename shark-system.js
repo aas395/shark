@@ -2,36 +2,36 @@ AFRAME.registerSystem('shark', {
   schema: {
     bufferDistance: {
       type: 'number',
-      default: 200
+      default: 100
     },
     numObstacles: {
       type: 'number',
-      default: 20
+      default: 4
     },
     zMargin: {
       type: 'number',
       default: 100
     }
   },
-  updateSharkSpeed: function() {
-    var sharks = document.querySelectorAll('a-entity[shark]');
-    var Game = document.querySelector('a-scene').systems['game'];
+  init: function() {
+    var scene = document.querySelector('a-scene');
+    var self = this;
 
-    sharks.forEach(function(shark) {
-      if(typeof Game.data.levelSettings[Game.data.level] != 'undefined') {
-        shark.components['shark'].updateSpeed(Game.data.levelSettings[Game.data.level].sharkSpeed);  
-      }
+    scene.addEventListener('loaded', function() {
+      self.initObstacles();  
+    });
+
+    scene.addEventListener('gamereset', function() {
+      self.resetObstaclePositions();
     });
   },
   initObstacles: function() {
     var obstaclesContainer = document.querySelector('#obstacles-container');
     var lastSharkPosition = {x: 0, y: 0, z: -this.data.bufferDistance};
     var tunnel = document.querySelector('#tunnel');
-    var maxZ = tunnel.components['geometry'].data.height;
+    var maxZ = this.data.numObstacles * 100 + this.data.bufferDistance;
 
     for(var i = 0; i < this.data.numObstacles; i++) {
-      // @TODO
-      // move shark position setting into shark system
       var shark = document.createElement('a-entity');
       
       var sharkPosition = {
@@ -42,9 +42,7 @@ AFRAME.registerSystem('shark', {
 
       shark.setAttribute('position', sharkPosition);
       shark.setAttribute('mixin', 'shark');
-
       obstaclesContainer.appendChild(shark);
-
       lastSharkPosition = sharkPosition;
     }
   },
@@ -79,7 +77,7 @@ AFRAME.registerSystem('shark', {
     return positionY;
   },
   getRandomZCoordinate: function(maxZ, lastSharkZ) {
-    var positionZ = lastSharkZ - this.data.zMargin - Math.floor(Math.random() * 150);
+    var positionZ = lastSharkZ - this.data.zMargin - Math.floor(Math.random() * 100);
     return positionZ;
   }
 });

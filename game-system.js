@@ -24,55 +24,53 @@ AFRAME.registerSystem('game', {
       type : "number",
       default : 0
     },
+    endModalTimerStart: {
+      type: "number",
+      default: 5
+    },
     levelSettings: {
       type: 'array',
       default: [
         {
-          end: 750,
-          sharkSpeed: 1
-        },
-        {
-          end: 1125,
+          end: 11,
           sharkSpeed: 1.5
         },
         {
-          end: 1687.5,
-          sharkSpeed: 2.25
+          end: 23,
+          sharkSpeed: 1.75,
+          audioFile: '#shark-track-140'
         },
         {
-          end: 2531.25,
-          sharkSpeed: 2.25
+          end: 35,
+          sharkSpeed: 2.00,
+          audioFile: '#shark-track-160'
         },
         {
-          end: 3796.5,
-          sharkSpeed: 3.25
+          end: 47,
+          sharkSpeed: 2.5,
+          audioFile: '#shark-track-170'
         },
         {
-          end: 5694,
-          sharkSpeed: 4.25
+          end: 59,
+          sharkSpeed: 3
         },
         {
-          end: 8541,
-          sharkSpeed: 6.25
+          end: 71,
+          sharkSpeed: 3.5
         },
         {
-          end: 12811.5,
-          sharkSpeed: 9.5
+          end: 83,
+          sharkSpeed: 4.0
+        },
+        {
+          end: 95,
+          sharkSpeed: 4.5
         }
       ]
     }
   },  // System schema. Parses into `this.data`.
   init: function () {
     this.timerIntervalId;
-
-    var scene = document.querySelector('a-scene');
-    scene.addEventListener('loaded', function() {
-      setTimeout(function() {
-        document.querySelector('a-scene').systems['shark'].initObstacles();  
-      }, 0);
-    });
-
-    // this.el.appendChild('<a-entity physics-body="static-body" mixin="build" geometry="depth: 150; width: 150; height: 140;" position="110 69 1500" material="src: url(https://cdn.glitch.com/b870d9ec-1139-44f9-b462-223e4a2c74e7%2Ftexture.jpg?1490308149272)"></a-entity>')
   },
   tick: function() {
     if(this.data.hasStarted) {
@@ -80,84 +78,73 @@ AFRAME.registerSystem('game', {
       this.updateScore();
     }
 
-    if(typeof this.data.levelSettings[this.data.level] != 'undefined' 
-      && this.data.distance > this.data.levelSettings[this.data.level].end) {
+    if(typeof this.data.levelSettings[this.data.level + 1] != 'undefined'
+      && this.data.time > this.data.levelSettings[this.data.level].end) {
       this.incrementLevel();
     }
   },
   incrementLevel: function() {
+    var scene = document.querySelector('a-scene');
+    var self = this;
+
     this.data.level++;
+
+    //some components and systems may be listening for these events
+    scene.emit('gamelevelincrease', {level: this.data.level});
+
     console.log('incrementing level to level ' + this.data.level);
-    document.querySelector('a-scene').systems['shark'].updateSharkSpeed();
-  },
-  setDistance: function(distance) {
-    this.data.distance = distance;
   },
   updateDistance: function() {
-    // @TODO maybe add compounding with increased speed
-    this.setDistance(this.data.distance + 1 + (this.data.level * .5));
+    this.data.distance = this.data.distance + this.data.levelSettings[this.data.level].sharkSpeed;
   },
   updateScore: function() {
     this.data.score = this.data.distance;
   },
   startGame: function() {
-    this.resetGame();
+    var scene = document.querySelector('a-scene');
+    scene.emit('gamestart');
+
     this.startTimer();
     this.data.hasStarted = true;
-
-    document.querySelector('a-scene').systems['shark'].updateSharkSpeed();
 
     document.querySelector("#intro-modal").setAttribute('visible', false);
     document.querySelector("#cursor").setAttribute('visible', false);
   },
   endGame: function() {
-    var that = this;
+    var self = this;
+    var scene = document.querySelector('a-scene');
+    scene.emit('gameend');
+    clearInterval(self.timerIntervalId);
 
-    document.querySelector('a-scene').systems['shark'].updateSharkSpeed(0);
+    var timeRemaining = self.data.endModalTimerStart;
+    var countdownEl = document.querySelector('#countdown');
+
+    var intervalId = setInterval(function() {
+      timeRemaining--;
+
+      scene.emit('gameendtimerchange', { timeRemaining: timeRemaining });
+
+      if(timeRemaining == 0) {
+        clearInterval(intervalId);
+        self.resetGame();
+        self.startGame();
+      }
+    }, 1000);
 
     this.data.hasStarted = false;
-
-    var endModal = document.querySelector("#end-modal");
-    var endDistance = this.data.distance;
-
-    endModal.setAttribute('visible', true);
-
-    clearInterval(this.timerIntervalId);
-
-    var timeRemaining = 5;
-
-    var intervalId = setInterval(function(){
-      if(timeRemaining == 1) {
-        document.querySelector('#countdown').setAttribute('text', {align: "center",  value: "5"  });
-        clearInterval(intervalId);
-        that.resetGame();
-        that.startGame();
-        return;
-      }
-
-      timeRemaining--;
-      document.querySelector('#countdown').setAttribute('text', {align: "center",  value: "" + timeRemaining });
-    }, 1000);
   },
   resetGame: function(){
-    var playerPosition = document.querySelector("#character").getAttribute('position');
-    document.querySelector("#character").setAttribute('position', {x:0,  y:0, z: playerPosition.z});
+    var scene = document.querySelector('a-scene');
+    scene.emit('gamereset');
 
     this.data.score = 0;
     this.data.time = 0;
     this.data.level = 0;
     this.data.distance = 0;
-
-    document.querySelector('a-scene').systems['shark'].resetObstaclePositions();
-
-    var endModal = document.querySelector("#end-modal");
-    endModal.setAttribute('visible', false);
   },
   startTimer: function() {
     var self = this;
-    //Using the date/time is the only thing I could think to use as a timer
 
-    // Update the count down every 1 second
     self.timerIntervalId = setInterval(function() {
       self.data.time++;
       // var minutes = Math.floor(that.data.time / 60);
@@ -165,6 +152,7 @@ AFRAME.registerSystem('game', {
 
       // Display the result in the element with id="demo"
       // that.updateTimer(minutes, seconds);
+      console.log(self.data.time);
     }, 1000);
   }
 });
